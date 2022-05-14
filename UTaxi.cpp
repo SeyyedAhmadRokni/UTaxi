@@ -33,4 +33,11 @@ void UTaxi::signup(std::string userName, Role role){
     }
 }
 
+
+void UTaxi::tirp(std::string userName, std::string origin,
+    std::string destination){
+
+    Passenger* passenger = (Passenger*)persons.at(userName);
+    passenger->goTrip();
+}
 #endif

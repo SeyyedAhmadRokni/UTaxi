@@ -12,11 +12,12 @@ public:
 
 class Passenger: public Person{
 private:
-
+    bool isInTrip = false;
 
 public:
     Passenger(std::string userName);
-
+    void goTrip();
+    void endTrip();
 };
 
 class Driver: public Person{
