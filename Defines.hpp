@@ -3,6 +3,11 @@
 
 #include<string>
 
+enum Role{
+    PASSENGER,
+    DRIVER,
+};
+
 std::string SUCCESS_MASSAGE = "OK";
 std::string EMPTY_MASSAGE = "EMPTY";
 std::string ABSENCE_MASSAGE = "Not Found";
