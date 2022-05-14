@@ -8,12 +8,16 @@ private:
     int id;
     std::string driver;
     std::string passenger;
+    std::string origin;
+    std::string destination;
     TripStatus status = WAITING;
 public:
-    Trip(int id, std::string driver, std::string passenger);
-    void traveling();
+    Trip(int id, std::string passenger,
+        std::string origin, std::string destination);
+    void getBy(std::string name);
     void finish();
-    
+    bool isForDriver(std::string name);
+    void print();
 };
 
 

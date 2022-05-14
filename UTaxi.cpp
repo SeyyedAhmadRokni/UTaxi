@@ -34,10 +34,24 @@ void UTaxi::signup(std::string userName, Role role){
 }
 
 
-void UTaxi::tirp(std::string userName, std::string origin,
+void UTaxi::startTrip(std::string userName, std::string origin,
     std::string destination){
 
     Passenger* passenger = (Passenger*)persons.at(userName);
+    trips.push_back(new Trip(trips.size()+1, userName,
+        origin, destination ));
     passenger->goTrip();
 }
+
+void UTaxi::showAllTrips(std::string userName){
+    for (int i = 0; i < trips.size(); i++) {
+        trips[i]->print();
+    }
+}
+
+void UTaxi::showATrip(std::string userName, int id){
+    trips[id-1]->print();
+}
+
+
 #endif
