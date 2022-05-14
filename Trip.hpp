@@ -18,6 +18,8 @@ public:
     void finish();
     bool isForDriver(std::string name);
     void print();
+    void cancle();
+    void acceptTrip(std::string userName, int id);
 };
 
 

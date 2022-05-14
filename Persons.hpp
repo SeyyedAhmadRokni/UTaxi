@@ -6,18 +6,19 @@
 class Person{
 private:
     std::string userName;
+protected:
+    bool isInTrip = false;
 public:
     Person(std::string usernName);
+    void endTrip();
 };
 
 class Passenger: public Person{
 private:
-    bool isInTrip = false;
 
 public:
     Passenger(std::string userName);
     void goTrip();
-    void endTrip();
 };
 
 class Driver: public Person{
@@ -25,7 +26,7 @@ private:
 
 public:
     Driver(std::string userName);
-
+    void getTrip();
 };
 
 #endif

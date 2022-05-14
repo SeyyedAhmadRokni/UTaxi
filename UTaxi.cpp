@@ -53,5 +53,19 @@ void UTaxi::showATrip(std::string userName, int id){
     trips[id-1]->print();
 }
 
+void UTaxi::cancleTrip(std::string userName, int id){
+    trips[id-1]->cancle();
+}
 
+void UTaxi::acceptTrip(std::string userName, int id){
+    Trip* trip = trips[id-1];
+    trip->getBy(userName);
+    ((Driver*)persons.at(userName))->getTrip();
+}
+
+void UTaxi::finishTrip(std::string userName, int id){
+    Trip* trip = trips[id-1];
+    trip->finish();
+    ((Driver*)persons.at(userName))->endTrip();
+}
 #endif

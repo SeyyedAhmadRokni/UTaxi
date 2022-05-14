@@ -12,6 +12,7 @@ enum TripStatus{
     WAITING,
     TRAVELING,
     FINISHED,
+    CANCLED,
 };
 
 std::string SUCCESS_MASSAGE = "OK";

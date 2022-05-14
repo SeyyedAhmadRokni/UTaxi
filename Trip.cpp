@@ -38,4 +38,8 @@ void Trip::print(){
     }
     std::printf("%d %s %s %s\n", id, origin, destination, statusToString);
 }
+
+void Trip::cancle(){
+    status = CANCLED;
+}
 #endif

@@ -18,6 +18,9 @@ public:
         std::string destination);
     void showAllTrips(std::string userName);
     void showATrip(std::string userName, int id);
+    void cancleTrip(std::string userName, int id);
+    void acceptTrip(std::string userName, int id);
+    void finishTrip(std::string userName, int id);
 };
 
 #endif
