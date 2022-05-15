@@ -7,10 +7,11 @@ class Person{
 private:
     std::string userName;
 protected:
-    bool isInTrip = false;
+    bool inTrip = false;
 public:
     Person(std::string usernName);
     void endTrip();
+    bool isInTrip();
 };
 
 class Passenger: public Person{

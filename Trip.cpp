@@ -25,18 +25,22 @@ bool Trip::isForDriver(std::string name){
     return name == driver;
 }
 
-void Trip::print(){
+std::ostream& operator<<(std::ostream& os, const Trip& trip){
     std::string statusToString;
-    if (status == WAITING){
+    if (trip.status == WAITING){
         statusToString = "waiting";
     }
-    else if(status == TRAVELING){
+    else if(trip.status == TRAVELING){
         statusToString = "traveling";
     }
     else{
         statusToString = "finished";
     }
-    std::printf("%d %s %s %s\n", id, origin, destination, statusToString);
+
+    os << trip.id << ' ' << trip.origin << ' ' << trip.destination
+        << ' ' << statusToString ;
+
+    return os;
 }
 
 void Trip::cancle(){

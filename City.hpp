@@ -8,14 +8,12 @@ private:
     std::string name;
     Location *location;
 
-
 public:
     City(std::string name, double latitude, double longitude);
+    friend std::ostream& operator<<(std::ostream& os, const City& city);
     
-
 };
 
-
-
+std::ostream& operator<<(std::ostream& os, const City& city);
 
 #endif 

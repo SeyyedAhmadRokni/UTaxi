@@ -8,7 +8,11 @@ Person::Person(std::string userNmae){
 }
 
 void Person::endTrip(){
-    isInTrip = false;
+    inTrip = false;
+}
+
+bool Person::isInTrip(){
+    return inTrip;
 }
 
 Passenger::Passenger(std::string userName):Person(userName){
@@ -16,7 +20,7 @@ Passenger::Passenger(std::string userName):Person(userName){
 }
 
 void Passenger::goTrip(){
-    isInTrip = true;
+    inTrip = true;
 }
 
 
@@ -25,7 +29,7 @@ Driver::Driver(std::string userName):Person(userName){
 }
 
 void Driver::getTrip(){
-    isInTrip = true;
+    inTrip = true;
 }
 
 

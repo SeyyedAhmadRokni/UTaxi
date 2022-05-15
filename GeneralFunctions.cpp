@@ -1,6 +1,7 @@
 #ifndef _GENE_
 #define _GENE_
 #include <bits/stdc++.h>
+#include "GeneralFunctions.hpp"
 
 std::vector<std::string> split (std::string input, char seprator){
     std::vector<std::string> splited;

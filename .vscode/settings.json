@@ -74,5 +74,23 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/seyyedahmad/Documents/Term2/Taklif5/Last/src",
+            "binaryPath": "/home/seyyedahmad/Documents/Term2/Taklif5/Last/src/starwars.out",
+            "binaryArgs": []
+        },
+        {
+            "cwd": "/home/seyyedahmad/Documents/Term2/Taklif7",
+            "binaryPath": "/home/seyyedahmad/Documents/Term2/Taklif7/utaxi.out",
+            "binaryArgs": []
+        }
+    ],
+    "makefile.configurations": [
+        {
+            "makeDirectory": "/home/seyyedahmad/Documents/Term2/Taklif7/",
+            "name": "Unnamed configuration 1"
+        }
+    ]
 }

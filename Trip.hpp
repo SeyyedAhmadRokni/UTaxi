@@ -17,9 +17,8 @@ public:
     void getBy(std::string name);
     void finish();
     bool isForDriver(std::string name);
-    void print();
+    friend std::ostream& operator<<(std::ostream& os, const Trip& trip);
     void cancle();
-    void acceptTrip(std::string userName, int id);
 };
 
 
