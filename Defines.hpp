@@ -16,10 +16,10 @@ enum TripStatus{
 };
 
 // std::string SUCCESS_MASSAGE = "OK";
-// std::string EMPTY_MASSAGE = "EMPTY";
-// std::string ABSENCE_MASSAGE = "Not Found";
+std::string EMPTY_MASSAGE = "EMPTY";
+std::string ABSENCE_MASSAGE = "Not Found";
 std::string INCORRECT_REQUEST_MASSAGE = "Bad Request";
-// std::string PERMISSION_DENIED_MASSAGE = "Permission Denied";
+std::string PERMISSION_DENIED_MASSAGE = "Permission Denied";
 
 
 #endif 

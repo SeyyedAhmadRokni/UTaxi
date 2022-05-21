@@ -2,8 +2,8 @@
 #define _LOC_
 #include "Location.hpp"
 
-Location::Location(double lattiude, double longtude){
-    this->lattiude = lattiude;
+Location::Location(double latitude, double longtude){
+    this->latitude = latitude;
     this->longitude = longtude;
 }
 

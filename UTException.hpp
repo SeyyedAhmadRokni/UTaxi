@@ -10,7 +10,6 @@ public:
     UTException(std::string m);
     void showMassage();
 
-
 };
 
 

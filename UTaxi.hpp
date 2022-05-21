@@ -12,6 +12,7 @@ private:
     std::vector<Trip*> trips;
 public:
     UTaxi(std::string citiesAddress);
+    ~UTaxi();
     void readCities(std::string listAddress);
     void signup(std::string userName, Role role);
     void startTrip(std::string userName, std::string origin,

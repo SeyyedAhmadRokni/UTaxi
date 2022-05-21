@@ -3,10 +3,10 @@
 
 class Location{
 private:
-    double lattiude, longitude;
+    double latitude, longitude;
 
 public:
-    Location(double lattiude, double logitude);
+    Location(double latitude, double logitude);
 
 };
 

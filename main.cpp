@@ -12,7 +12,6 @@ int main(){
     string address = "locations.csv";
     UTaxi ut(address);
     
-
 }
 
 

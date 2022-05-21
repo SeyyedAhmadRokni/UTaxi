@@ -10,6 +10,7 @@ private:
 
 public:
     City(std::string name, double latitude, double longitude);
+    ~City();
     friend std::ostream& operator<<(std::ostream& os, const City& city);
     
 };

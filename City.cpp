@@ -8,9 +8,11 @@ City:: City(std::string name, double latitude, double longitude){
         this->name = name;        
         location = new Location(latitude, longitude);
 }
-
+City:: ~City(){
+    delete location;
+}
 std::ostream& operator<<(std::ostream& os, const City& city){
-    os << city.name << ' ';
+    os << city.name;
     return os;
 }
 #endif
