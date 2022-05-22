@@ -4,11 +4,11 @@
 #include <bits/stdc++.h>
 #include "City.hpp"
 
-City:: City(std::string name, double latitude, double longitude){
+City::City(std::string name, double latitude, double longitude){
         this->name = name;        
         location = new Location(latitude, longitude);
 }
-City:: ~City(){
+City::~City(){
     delete location;
 }
 std::ostream& operator<<(std::ostream& os, const City& city){

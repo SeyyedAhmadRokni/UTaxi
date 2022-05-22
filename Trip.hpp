@@ -2,23 +2,24 @@
 #define _TRIP_H
 #include <bits/stdc++.h>
 #include "Defines.hpp"
+#include "Persons.hpp"
 
 class Trip{
 private:
     int id;
-    std::string driver;
-    std::string passenger;
+    Driver* driver;
+    Passenger* passenger;
     std::string origin;
     std::string destination;
     TripStatus status = WAITING;
 public:
-    Trip(int id, std::string passenger,
+    Trip(int id, Passenger* passenger,
         std::string origin, std::string destination);
-    void getBy(std::string name);
-    void finish();
+    void getBy(Driver* driver);
+    void finish(std::string user);
     bool isForDriver(std::string name);
     friend std::ostream& operator<<(std::ostream& os, const Trip& trip);
-    void cancle();
+    void cancle(std::string user);
 };
 
 

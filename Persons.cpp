@@ -2,36 +2,71 @@
 #define _PERSON_
 #include <bits/stdc++.h>
 #include "Persons.hpp"
+#include "UTException.hpp"
+#include "Defines.hpp"
 
 Person::Person(std::string userNmae){
     this->userName = userName;
 }
 
-void Person::endTrip(){
-    inTrip = false;
+void Person::showTrip(){
+    throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
-bool Person::isInTrip(){
-    return inTrip;
+void Person::startTrip(){
+    throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
-Passenger::Passenger(std::string userName):Person(userName){
-
+void Person::cancleTrip(std::string user){
+    throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
-void Passenger::goTrip(){
-    inTrip = true;
+void Person::getTrip(){
+    throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
+void Person::finishTrip(){
+    throw UTException(PERMISSION_DENIED_MASSAGE);
+}
 
-Driver::Driver(std::string userName):Person(userName){
+void Passenger::startTrip(){
+    if (isInTrip){
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
+    else {
+        isInTrip = true;
+    }
+}
 
+void Passenger::cancleTrip(std::string user){
+    if (user != userName){
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
+    else{
+        isInTrip = false;
+
+    }
+}
+
+void Driver::showTrip(){
+    return;
+}
+
+bool Driver::isYou(std::string user){
+    return user == userName;
 }
 
 void Driver::getTrip(){
-    inTrip = true;
+    if (isInTrip){
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
+    else {
+        isInTrip = true;
+    }
 }
 
-
+void Driver::finishTrip(){
+    isInTrip = false;
+}
 
 #endif

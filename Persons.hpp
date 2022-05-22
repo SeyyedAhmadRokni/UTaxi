@@ -5,13 +5,16 @@
 
 class Person{
 private:
-    std::string userName;
 protected:
-    bool inTrip = false;
+    std::string userName;
+    bool isInTrip = false;
 public:
     Person(std::string usernName);
-    void endTrip();
-    bool isInTrip();
+    virtual void startTrip();
+    virtual void showTrip();
+    void finishTrip();
+    virtual void cancleTrip(std::string user);
+    virtual void getTrip();
 };
 
 class Passenger: public Person{
@@ -19,7 +22,8 @@ private:
 
 public:
     Passenger(std::string userName);
-    void goTrip();
+    void startTrip();
+    virtual void cancleTrip(std::string user);
 };
 
 class Driver: public Person{
@@ -27,7 +31,10 @@ private:
 
 public:
     Driver(std::string userName);
-    void getTrip();
+    void showTrip();
+    void finishTrip();
+    bool isYou(std::string name);
+    virtual void getTrip();
 };
 
 #endif

@@ -10,8 +10,8 @@ private:
     std::map<std::string, City*> cities;
     std::map<std::string, Person*> persons;
     std::vector<Trip*> trips;
+
 public:
-    UTaxi(std::string citiesAddress);
     ~UTaxi();
     void readCities(std::string listAddress);
     void signup(std::string userName, Role role);
@@ -22,14 +22,19 @@ public:
     void cancleTrip(std::string userName, int id);
     void acceptTrip(std::string userName, int id);
     void finishTrip(std::string userName, int id);
+    std::map<Argument, std::string> readArguments(std::string args);
+    std::vector<Command> readCommands(std::string cmd);
+    Role identifyRole(std::string role);
+    Argument identifyArgument(std::string arg);
+    Command idenifyCommand(std::string commnad);
+    void doCommand(std::vector<Command> commands, 
+        std::map<Argument, std::string> arguments);
+    UTaxi(std::string citiesAddress);
+    void run();
     void test();
 };
 
 /*TODO: 1- handle the exceptions
-        2- add make file
         3- add an interface to UTaxi + add a command reader
-        4- make a differene between passenger and driver
-        5- replace Trip  function with operator (?)
-
 */
 #endif

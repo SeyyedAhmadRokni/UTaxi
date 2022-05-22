@@ -11,7 +11,7 @@ using namespace std;
 int main(){
     string address = "locations.csv";
     UTaxi ut(address);
-    
+    ut.run();    
 }
 
 

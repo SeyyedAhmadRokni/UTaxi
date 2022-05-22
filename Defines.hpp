@@ -15,6 +15,17 @@ enum TripStatus{
     CANCLED,
 };
 
+enum Command{
+    TRIPS,
+    SIGNUP,
+    FINISH,
+    POST,
+    DELETE,
+    GET,
+};
+
+
+
 // std::string SUCCESS_MASSAGE = "OK";
 std::string EMPTY_MASSAGE = "EMPTY";
 std::string ABSENCE_MASSAGE = "Not Found";

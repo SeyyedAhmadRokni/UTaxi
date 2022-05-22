@@ -3,8 +3,10 @@
 #include <bits/stdc++.h>
 #include "Defines.hpp"
 #include "Trip.hpp"
+#include "Persons.hpp"
+#include "UTException.hpp"
 
-Trip::Trip(int id, std::string passenger,
+Trip::Trip(int id, Passenger* passenger,
     std::string origin, std::string destination){
     this->id = id;
     this->passenger = passenger;
@@ -12,17 +14,20 @@ Trip::Trip(int id, std::string passenger,
     this->destination = destination;
 }
 
-void Trip::getBy(std::string driverName){
-    driver = driverName;
+void Trip::getBy(Driver* driver){
+    driver = driver;
     status = TRAVELING;
 }
 
-void Trip::finish(){
+void Trip::finish(std::string user){
+    if (!driver->isYou(user)){
+        throw UTException()
+    }
     status = FINISHED;
 }
 
 bool Trip::isForDriver(std::string name){
-    return name == driver;
+    return driver->isYou(name);
 }
 
 std::ostream& operator<<(std::ostream& os, const Trip& trip){
@@ -43,7 +48,14 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
     return os;
 }
 
-void Trip::cancle(){
+void Trip::cancle(std::string user){
+    try{
+        passenger->cancleTrip(user);
+        driver->finishTrip();
+    }
+    catch(std::exception& ex){
+        throw ex;
+    }
     status = CANCLED;
 }
 #endif
