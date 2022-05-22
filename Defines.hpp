@@ -22,9 +22,16 @@ enum Command{
     POST,
     DELETE,
     GET,
+    ACCEPT,
 };
 
-
+enum Argument{
+    USERNAME,
+    ID,
+    ORIGIN,
+    DESTINATION,
+    ROLE, 
+};
 
 // std::string SUCCESS_MASSAGE = "OK";
 std::string EMPTY_MASSAGE = "EMPTY";

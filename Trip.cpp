@@ -21,7 +21,7 @@ void Trip::getBy(Driver* driver){
 
 void Trip::finish(std::string user){
     if (!driver->isYou(user)){
-        throw UTException()
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
     status = FINISHED;
 }

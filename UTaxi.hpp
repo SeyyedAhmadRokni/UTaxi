@@ -5,14 +5,13 @@
 #include "Persons.hpp"
 #include "Defines.hpp"
 #include "Trip.hpp"
+
 class UTaxi{
 private:
     std::map<std::string, City*> cities;
     std::map<std::string, Person*> persons;
     std::vector<Trip*> trips;
 
-public:
-    ~UTaxi();
     void readCities(std::string listAddress);
     void signup(std::string userName, Role role);
     void startTrip(std::string userName, std::string origin,
@@ -29,6 +28,9 @@ public:
     Command idenifyCommand(std::string commnad);
     void doCommand(std::vector<Command> commands, 
         std::map<Argument, std::string> arguments);
+
+public:
+    ~UTaxi();
     UTaxi(std::string citiesAddress);
     void run();
     void test();
