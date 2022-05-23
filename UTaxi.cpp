@@ -46,16 +46,14 @@ void UTaxi::signup(std::string userName, Role role){
     if (persons.count(userName)){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
-
+    Person *person;
     if (role == PASSENGER){
-        persons.insert({userName, 
-            new Passenger(userName)
-        });
+        person = new Passenger(userName);
+        persons.insert({userName, person});
     }
     else if (role == DRIVER){
-        persons.insert({userName, 
-            new Driver(userName)
-        });
+        person = new Driver(userName);
+        persons.insert({userName, person});
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);

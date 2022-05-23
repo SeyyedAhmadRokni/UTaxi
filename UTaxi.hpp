@@ -36,8 +36,4 @@ public:
     void test();
 };
 
-/*TODO: 1- handle the exceptions
-        2- add print OK to functions
-        3- add an interface to UTaxi + add a command reader
-*/
 #endif

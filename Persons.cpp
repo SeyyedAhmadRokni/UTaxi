@@ -48,6 +48,14 @@ void Passenger::cancleTrip(std::string user){
     }
 }
 
+Passenger::Passenger(std::string userName): Person(userName){
+    
+}
+
+Driver::Driver(std::string userName): Person(userName){
+
+}
+
 void Driver::showTrip(){
     return;
 }
