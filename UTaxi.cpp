@@ -60,6 +60,8 @@ void UTaxi::signup(std::string userName, Role role){
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
+
+    std::cout << SUCCESS_MASSAGE;
 }
 
 void UTaxi::startTrip(std::string userName, std::string origin,
@@ -71,6 +73,8 @@ void UTaxi::startTrip(std::string userName, std::string origin,
     persons.at(userName)->startTrip();
     trips.push_back(new Trip(trips.size()+1, (Passenger*)persons.at(userName),
         origin, destination ));
+    
+    std::cout << trips[trips.size()-1]->getId();
 }
 
 void UTaxi::showAllTrips(std::string userName){
@@ -101,6 +105,7 @@ void UTaxi::cancleTrip(std::string userName, int id){
         throw UTException(ABSENCE_MASSAGE);
     }
     trips[id-1]->cancle(userName);
+    std::cout << SUCCESS_MASSAGE;
 }
 
 void UTaxi::acceptTrip(std::string userName, int id){
@@ -110,6 +115,7 @@ void UTaxi::acceptTrip(std::string userName, int id){
     persons.at(userName)->getTrip();
     Trip* trip = trips[id-1];
     trip->getBy((Driver*)persons.at(userName));
+    std::cout << SUCCESS_MASSAGE;
 }
 
 void UTaxi::finishTrip(std::string userName, int id){
@@ -119,6 +125,7 @@ void UTaxi::finishTrip(std::string userName, int id){
     persons.at(userName)->finishTrip();
     Trip* trip = trips[id-1];
     trip->finish(userName);
+    std::cout << SUCCESS_MASSAGE;
 }
 
 void UTaxi::test(){
@@ -149,6 +156,9 @@ Command UTaxi::idenifyCommand(std::string command){
     else if (command == "GET"){
         return GET;
     }
+    else{
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
 }
 
 Role UTaxi::identifyRole(std::string role){
@@ -157,6 +167,9 @@ Role UTaxi::identifyRole(std::string role){
     }
     else if (role == "DRIVER"){
         return DRIVER;
+    }
+    else{
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
 }
 
@@ -175,6 +188,9 @@ Argument UTaxi::identifyArgument(std::string arg){
     }
     else if (arg == "role"){
         return ROLE;
+    }
+    else{
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
 }
 

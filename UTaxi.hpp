@@ -2,8 +2,8 @@
 #define _UTAXI_H
 #include <bits/stdc++.h>
 #include "City.hpp"
-#include "Persons.hpp"
 #include "Defines.hpp"
+#include "Persons.hpp"
 #include "Trip.hpp"
 
 class UTaxi{
@@ -37,6 +37,7 @@ public:
 };
 
 /*TODO: 1- handle the exceptions
+        2- add print OK to functions
         3- add an interface to UTaxi + add a command reader
 */
 #endif

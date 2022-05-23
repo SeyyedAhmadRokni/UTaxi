@@ -58,4 +58,9 @@ void Trip::cancle(std::string user){
     }
     status = CANCLED;
 }
+
+
+int Trip::getId(){
+    return id;
+}
 #endif

@@ -20,6 +20,7 @@ public:
     bool isForDriver(std::string name);
     friend std::ostream& operator<<(std::ostream& os, const Trip& trip);
     void cancle(std::string user);
+    int getId();
 };
 
 

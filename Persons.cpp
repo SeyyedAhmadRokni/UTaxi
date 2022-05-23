@@ -1,5 +1,5 @@
-#ifndef _PERSON_
-#define _PERSON_
+#ifndef _PERSON_C
+#define _PERSON_C
 #include <bits/stdc++.h>
 #include "Persons.hpp"
 #include "UTException.hpp"

@@ -1,7 +1,7 @@
 #ifndef _DEF_H
 #define _DEF_H
 
-#include<string>
+#include <bits/stdc++.h>
 
 enum Role{
     PASSENGER,
@@ -33,7 +33,7 @@ enum Argument{
     ROLE, 
 };
 
-// std::string SUCCESS_MASSAGE = "OK";
+std::string SUCCESS_MASSAGE = "OK";
 std::string EMPTY_MASSAGE = "EMPTY";
 std::string ABSENCE_MASSAGE = "Not Found";
 std::string INCORRECT_REQUEST_MASSAGE = "Bad Request";

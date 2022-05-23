@@ -1,6 +1,5 @@
-
-#ifndef _MAIN_
-#define _MAIN_
+#ifndef _MAIN_C
+#define _MAIN_C
 
 #include <bits/stdc++.h>
 #include "UTaxi.hpp"
