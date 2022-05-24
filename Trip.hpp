@@ -16,8 +16,8 @@ public:
     Trip(int id, Passenger* passenger,
         std::string origin, std::string destination);
     void getBy(Driver* driver);
-    void finish(std::string user);
     void checkIsTripDriver(std::string name);
+    void finish(std::string user);
     friend std::ostream& operator<<(std::ostream& os, const Trip& trip);
     void cancle(std::string user);
     int getId();

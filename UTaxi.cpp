@@ -6,7 +6,7 @@
 #include "GeneralFunctions.hpp"
 #include "Defines.hpp"
 #include "Persons.hpp"
-#include "City.hpp"
+#include "Area.hpp"
 #include "UTException.hpp"
 #include "Trip.hpp"
 
@@ -15,7 +15,7 @@ UTaxi::UTaxi(std::string citiesAddress){
 }
 
 UTaxi::~UTaxi(){
-    for (auto itr = cities.begin(); itr != cities.end(); ++itr){
+    for (auto itr = areas.begin(); itr != areas.end(); ++itr){
         delete itr->second;
     }
     
@@ -36,8 +36,8 @@ void UTaxi::readCities(std::string listAddress){
     while(getline(file, readed)){
         std::vector<std::string> splited = split(readed, ',');
         std::string cityName = splited[0];
-        cities.insert({cityName, 
-            new City(cityName, std::stod(splited[1]), std::stod(splited[2]))
+        areas.insert({cityName, 
+            new Area(cityName, std::stod(splited[1]), std::stod(splited[2]))
             });
     }
 }
@@ -63,8 +63,8 @@ void UTaxi::signup(std::string userName, Role role){
 
 void UTaxi::startTrip(std::string userName, std::string origin,
     std::string destination){
-    if (!persons.count(userName) || !cities.count(origin)
-        || !cities.count(destination)){
+    if (!persons.count(userName) || !areas.count(origin)
+        || !areas.count(destination)){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->startTrip();
@@ -119,7 +119,6 @@ void UTaxi::finishTrip(std::string userName, int id){
     if (!persons.count(userName) ||  !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
-    trips[id]->checkIsTripDriver(userName);
     trips[id]->finish(userName);
 }
 

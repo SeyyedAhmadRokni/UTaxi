@@ -1,14 +1,14 @@
 #ifndef _UTAXI_H
 #define _UTAXI_H
 #include <bits/stdc++.h>
-#include "City.hpp"
+#include "Area.hpp"
 #include "Defines.hpp"
 #include "Persons.hpp"
 #include "Trip.hpp"
 
 class UTaxi{
 private:
-    std::map<std::string, City*> cities;
+    std::map<std::string, Area*> areas;
     std::map<std::string, Person*> persons;
     std::map<int, Trip*> trips;
 
