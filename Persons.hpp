@@ -34,6 +34,7 @@ private:
 
 public:
     Driver(std::string userName);
+    void showTrip();
     void finishTrip();
     bool isYou(std::string name);
     virtual void getTrip();

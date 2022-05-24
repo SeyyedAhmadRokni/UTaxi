@@ -24,7 +24,7 @@ UTaxi::~UTaxi(){
     }
 
     for (auto itr = trips.begin(); itr != trips.end(); ++itr){
-        delete[] *itr; 
+        delete[] itr->second; 
     }
 }
 
@@ -68,9 +68,10 @@ void UTaxi::startTrip(std::string userName, std::string origin,
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->startTrip();
-    trips.push_back(new Trip(trips.size()+1, (Passenger*)persons.at(userName),
-        origin, destination ));
-    std::cout << trips[trips.size()-1]->getId() << std::endl;
+    trips.insert({trips.size()+1,
+        new Trip(trips.size()+1, (Passenger*)persons.at(userName),
+        origin, destination )});
+    std::cout << trips[trips.size()]->getId() << std::endl;
 }
 
 void UTaxi::showAllTrips(std::string userName){
@@ -82,8 +83,8 @@ void UTaxi::showAllTrips(std::string userName){
         std::cout << EMPTY_MASSAGE << std::endl;
     }
     else{
-        for (int i = 0; i < trips.size(); i++) {
-            std::cout << *trips[i] << std::endl;
+        for (auto itr = trips.begin(); itr != trips.end(); ++itr){
+            std::cout << *(itr->second) << std::endl;
         }
     }
 }
@@ -93,14 +94,14 @@ void UTaxi::showATrip(std::string userName, int id){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->showTrip();
-    std::cout << *trips[id-1] << std::endl;
+    std::cout << *trips[id] << std::endl;
 }
 
 void UTaxi::cancleTrip(std::string userName, int id){
     if (!persons.count(userName) || id > trips.size()){
         throw UTException(ABSENCE_MASSAGE);
     }
-    trips[id-1]->cancle(userName);
+    trips[id]->cancle(userName);
 }
 
 void UTaxi::acceptTrip(std::string userName, int id){
@@ -108,16 +109,15 @@ void UTaxi::acceptTrip(std::string userName, int id){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->getTrip();
-    Trip* trip = trips[id-1];
+    Trip* trip = trips[id];
     trip->getBy((Driver*)persons.at(userName));
-    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 void UTaxi::finishTrip(std::string userName, int id){
     if (!persons.count(userName) || id > trips.size()){
         throw UTException(ABSENCE_MASSAGE);
     }
-    Trip* trip = trips[id-1];
+    Trip* trip = trips[id];
     trip->finish(userName);
 }
 
@@ -254,16 +254,15 @@ void UTaxi::run(){
             std::map<Argument, std::string> arguments = readArguments(splited[1]);
             doCommand(commands, arguments);
 
-            
-            std::cout << "TIPS:\n";
-            for (auto itr = trips.begin(); itr != trips.end(); ++itr){
-                std::cout << *itr << std::endl;
-            }
+            // std::cout << "TIPS:\n";
+            // for (auto itr = trips.begin(); itr != trips.end(); ++itr){
+            //     std::cout << *itr << std::endl;
+            // }
 
-            std::cout << "PERSONS:\n";
-            for (auto itr = persons.begin(); itr != persons.end(); ++itr){
-                std::cout << *(itr->second) << std::endl; 
-            }
+            // std::cout << "PERSONS:\n";
+            // for (auto itr = persons.begin(); itr != persons.end(); ++itr){
+            //     std::cout << *(itr->second) << std::endl; 
+            // }
         }
         catch(UTException& ex) {
             ex.showMassage();

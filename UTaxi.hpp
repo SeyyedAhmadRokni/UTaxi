@@ -10,7 +10,7 @@ class UTaxi{
 private:
     std::map<std::string, City*> cities;
     std::map<std::string, Person*> persons;
-    std::vector<Trip*> trips;
+    std::map<int, Trip*> trips;
 
     void readCities(std::string listAddress);
     void signup(std::string userName, Role role);

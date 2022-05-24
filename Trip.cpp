@@ -17,6 +17,7 @@ Trip::Trip(int id, Passenger* passenger,
 void Trip::getBy(Driver* driver){
     driver = driver;
     status = TRAVELING;
+    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 void Trip::finish(std::string user){

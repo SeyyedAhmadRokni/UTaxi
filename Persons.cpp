@@ -44,7 +44,7 @@ void Passenger::startTrip(){
 }
 
 void Passenger::cancleTrip(std::string user){
-    std::cout << "USER == " << this->userName << std::endl;
+    std::cout << "USER == " << userName << std::endl;
     if (user != userName){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
@@ -62,7 +62,6 @@ Driver::Driver(std::string userName): Person(userName){
 }
 
 void Driver::showTrip(){
-    std::cout << *trips[id-1] << std::endl;
     return;
 }
 
