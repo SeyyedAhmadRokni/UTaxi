@@ -14,13 +14,14 @@ Trip::Trip(int id, Passenger* passenger,
     this->destination = destination;
 }
 
-void Trip::getBy(Driver* driver){
-    driver = driver;
+void Trip::getBy(Driver* driv){
+    driver = driv;
     status = TRAVELING;
     std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 void Trip::finish(std::string user){
+
     if (!driver->isYou(user)){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
@@ -44,27 +45,22 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
     else{
         statusToString = "finished";
     }
-
-    os << trip.id << ' ' << trip.origin << ' ' << trip.destination
+    os << trip.id << ' ' << trip.passenger->getName() << ' '<< trip.origin << ' ' << trip.destination
         << ' ' << statusToString ;
 
     return os;
 }
 
 void Trip::cancle(std::string user){
-    try{
-        passenger->cancleTrip(user);
-        if (driver != NULL){
-            driver->finishTrip();
-        }
-        status = CANCLED;
-        std::cout << SUCCESS_MASSAGE << std::endl;
+    if (status == TRAVELING || status == FINISHED){
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
-    catch(std::exception& ex){
-        throw ex;
+    passenger->cancleTrip(user);
+    if (driver != NULL){
+        driver->finishTrip();
     }
+    std::cout << SUCCESS_MASSAGE << std::endl;
 }
-
 
 int Trip::getId(){
     return id;

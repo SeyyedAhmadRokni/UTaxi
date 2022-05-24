@@ -90,7 +90,7 @@ void UTaxi::showAllTrips(std::string userName){
 }
 
 void UTaxi::showATrip(std::string userName, int id){
-    if (!persons.count(userName) || id > trips.size()){
+    if (!persons.count(userName) || !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->showTrip();
@@ -98,14 +98,16 @@ void UTaxi::showATrip(std::string userName, int id){
 }
 
 void UTaxi::cancleTrip(std::string userName, int id){
-    if (!persons.count(userName) || id > trips.size()){
+    if (!persons.count(userName) || !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
     trips[id]->cancle(userName);
+    delete trips[id];
+    trips.erase(id);
 }
 
 void UTaxi::acceptTrip(std::string userName, int id){
-    if (!persons.count(userName) || id > trips.size()){
+    if (!persons.count(userName) || !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->getTrip();
@@ -114,11 +116,10 @@ void UTaxi::acceptTrip(std::string userName, int id){
 }
 
 void UTaxi::finishTrip(std::string userName, int id){
-    if (!persons.count(userName) || id > trips.size()){
+    if (!persons.count(userName) ||  !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
-    Trip* trip = trips[id];
-    trip->finish(userName);
+    trips[id]->finish(userName);
 }
 
 Command UTaxi::idenifyCommand(std::string command){

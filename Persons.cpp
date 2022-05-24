@@ -5,8 +5,12 @@
 #include "UTException.hpp"
 #include "Defines.hpp"
 
-Person::Person(std::string userNmae){
-    this->userName = userName;
+Person::Person(std::string name){
+    userName = name;
+}
+
+std::string Person::getName(){
+    return userName;
 }
 
 void Person::showTrip(){
@@ -44,9 +48,8 @@ void Passenger::startTrip(){
 }
 
 void Passenger::cancleTrip(std::string user){
-    std::cout << "USER == " << userName << std::endl;
     if (user != userName){
-        throw UTException(INCORRECT_REQUEST_MASSAGE);
+        throw UTException(PERMISSION_DENIED_MASSAGE);
     }
     else{
         isInTrip = false;

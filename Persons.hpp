@@ -16,6 +16,7 @@ public:
     virtual void cancleTrip(std::string user);
     virtual void getTrip();
     friend std::ostream& operator<<(std::ostream& os, const Person& person);
+    std::string getName();
 };
 
 std::ostream& operator<<(std::ostream& os, const Person& person);

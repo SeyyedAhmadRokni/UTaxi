@@ -12,7 +12,6 @@ enum TripStatus{
     WAITING,
     TRAVELING,
     FINISHED,
-    CANCLED,
 };
 
 enum Command{
