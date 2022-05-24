@@ -8,7 +8,7 @@
 #include "Persons.hpp"
 #include "City.hpp"
 #include "UTException.hpp"
-
+#include "Trip.hpp"
 
 UTaxi::UTaxi(std::string citiesAddress){
     readCities(citiesAddress);
@@ -37,8 +37,8 @@ void UTaxi::readCities(std::string listAddress){
         std::vector<std::string> splited = split(readed, ',');
         std::string cityName = splited[0];
         cities.insert({cityName, 
-            new City(cityName, std::stod(splited[1]), std::stod(splited[2]))}
-        );
+            new City(cityName, std::stod(splited[1]), std::stod(splited[2]))
+            });
     }
 }
 
@@ -58,8 +58,7 @@ void UTaxi::signup(std::string userName, Role role){
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
-
-    std::cout << SUCCESS_MASSAGE;
+    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 void UTaxi::startTrip(std::string userName, std::string origin,
@@ -71,8 +70,7 @@ void UTaxi::startTrip(std::string userName, std::string origin,
     persons.at(userName)->startTrip();
     trips.push_back(new Trip(trips.size()+1, (Passenger*)persons.at(userName),
         origin, destination ));
-    
-    std::cout << trips[trips.size()-1]->getId();
+    std::cout << trips[trips.size()-1]->getId() << std::endl;
 }
 
 void UTaxi::showAllTrips(std::string userName){
@@ -85,51 +83,42 @@ void UTaxi::showAllTrips(std::string userName){
     }
     else{
         for (int i = 0; i < trips.size(); i++) {
-            std::cout << trips[i] << std::endl;
+            std::cout << *trips[i] << std::endl;
         }
     }
 }
 
 void UTaxi::showATrip(std::string userName, int id){
-    if (!persons.count(userName) || id < trips.size()){
+    if (!persons.count(userName) || id > trips.size()){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->showTrip();
-    std::cout << trips[id-1] << std::endl;
+    std::cout << *trips[id-1] << std::endl;
 }
 
 void UTaxi::cancleTrip(std::string userName, int id){
-    if (!persons.count(userName) || id < trips.size()){
+    if (!persons.count(userName) || id > trips.size()){
         throw UTException(ABSENCE_MASSAGE);
     }
     trips[id-1]->cancle(userName);
-    std::cout << SUCCESS_MASSAGE;
 }
 
 void UTaxi::acceptTrip(std::string userName, int id){
-    if (!persons.count(userName) || id < trips.size()){
+    if (!persons.count(userName) || id > trips.size()){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->getTrip();
     Trip* trip = trips[id-1];
     trip->getBy((Driver*)persons.at(userName));
-    std::cout << SUCCESS_MASSAGE;
+    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 void UTaxi::finishTrip(std::string userName, int id){
-    if (!persons.count(userName) || id < trips.size()){
+    if (!persons.count(userName) || id > trips.size()){
         throw UTException(ABSENCE_MASSAGE);
     }
-    persons.at(userName)->finishTrip();
     Trip* trip = trips[id-1];
     trip->finish(userName);
-    std::cout << SUCCESS_MASSAGE;
-}
-
-void UTaxi::test(){
-    for (auto itr = cities.begin(); itr != cities.end(); itr++) {
-        std::cout << itr->second << std::endl;
-    }
 }
 
 Command UTaxi::idenifyCommand(std::string command){
@@ -160,10 +149,10 @@ Command UTaxi::idenifyCommand(std::string command){
 }
 
 Role UTaxi::identifyRole(std::string role){
-    if (role == "PASSENGER"){
+    if (role == "passenger"){
         return PASSENGER;
     }
-    else if (role == "DRIVER"){
+    else if (role == "driver"){
         return DRIVER;
     }
     else{
@@ -217,7 +206,7 @@ void UTaxi::doCommand(std::vector<Command> commands,
         else if (commands[0] == POST){
             if (commands[1] == SIGNUP){
                 signup(arguments.at(USERNAME),
-                identifyRole(arguments.at(ROLE)));
+                    identifyRole(arguments.at(ROLE)));
             }
             else if (commands[1] == TRIPS){
                 startTrip(arguments.at(USERNAME), arguments.at(ORIGIN),
@@ -256,14 +245,31 @@ std::map<Argument, std::string> UTaxi::readArguments(std::string args){
 void UTaxi::run(){
     std::string input;
     while(getline(std::cin, input)){
-        std::vector<std::string> splited = split(input, '?');
-        std::vector<Command> commands = readCommands(splited[0]);
-        std::map<Argument, std::string> arguments = readArguments(splited[1]);
         try {
+            std::vector<std::string> splited = split(input, '?');
+            if (splited.empty()){
+                continue;
+            }
+            std::vector<Command> commands = readCommands(splited[0]);
+            std::map<Argument, std::string> arguments = readArguments(splited[1]);
             doCommand(commands, arguments);
+
+            
+            std::cout << "TIPS:\n";
+            for (auto itr = trips.begin(); itr != trips.end(); ++itr){
+                std::cout << *itr << std::endl;
+            }
+
+            std::cout << "PERSONS:\n";
+            for (auto itr = persons.begin(); itr != persons.end(); ++itr){
+                std::cout << *(itr->second) << std::endl; 
+            }
         }
         catch(UTException& ex) {
             ex.showMassage();
+        }
+        catch(...){
+
         }
         
     }

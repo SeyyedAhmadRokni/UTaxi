@@ -23,7 +23,9 @@ void Trip::finish(std::string user){
     if (!driver->isYou(user)){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
+    driver->finishTrip();
     status = FINISHED;
+    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 bool Trip::isForDriver(std::string name){
@@ -51,12 +53,15 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
 void Trip::cancle(std::string user){
     try{
         passenger->cancleTrip(user);
-        driver->finishTrip();
+        if (driver != NULL){
+            driver->finishTrip();
+        }
+        status = CANCLED;
+        std::cout << SUCCESS_MASSAGE << std::endl;
     }
     catch(std::exception& ex){
         throw ex;
     }
-    status = CANCLED;
 }
 
 

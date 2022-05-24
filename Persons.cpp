@@ -29,6 +29,11 @@ void Person::finishTrip(){
     throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
+std::ostream& operator<<(std::ostream& os, const Person& person){
+    os << person.userName << std::endl;
+    return os;
+}
+
 void Passenger::startTrip(){
     if (isInTrip){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
@@ -39,12 +44,12 @@ void Passenger::startTrip(){
 }
 
 void Passenger::cancleTrip(std::string user){
+    std::cout << "USER == " << this->userName << std::endl;
     if (user != userName){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
     else{
         isInTrip = false;
-
     }
 }
 
@@ -57,6 +62,7 @@ Driver::Driver(std::string userName): Person(userName){
 }
 
 void Driver::showTrip(){
+    std::cout << *trips[id-1] << std::endl;
     return;
 }
 

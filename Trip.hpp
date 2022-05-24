@@ -7,7 +7,7 @@
 class Trip{
 private:
     int id;
-    Driver* driver;
+    Driver* driver = NULL;
     Passenger* passenger;
     std::string origin;
     std::string destination;
@@ -23,6 +23,6 @@ public:
     int getId();
 };
 
-
+std::ostream& operator<<(std::ostream& os, const Trip& trip);
 
 #endif

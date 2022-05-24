@@ -5,12 +5,12 @@
 
 std::vector<std::string> split (std::string input, char seprator){
     std::vector<std::string> splited;
-    
     std::string current = "";
     for (int i = 0; i < input.size(); i++)
     {
         if (input[i] == seprator){
-            splited.push_back(current);
+            if (!current.empty())
+                splited.push_back(current);
             current = "";
         }
         else{
@@ -24,8 +24,5 @@ std::vector<std::string> split (std::string input, char seprator){
     
     return splited;
 }
-
-
-
 
 #endif

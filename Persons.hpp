@@ -15,7 +15,10 @@ public:
     void finishTrip();
     virtual void cancleTrip(std::string user);
     virtual void getTrip();
+    friend std::ostream& operator<<(std::ostream& os, const Person& person);
 };
+
+std::ostream& operator<<(std::ostream& os, const Person& person);
 
 class Passenger: public Person{
 private:
@@ -31,7 +34,6 @@ private:
 
 public:
     Driver(std::string userName);
-    void showTrip();
     void finishTrip();
     bool isYou(std::string name);
     virtual void getTrip();

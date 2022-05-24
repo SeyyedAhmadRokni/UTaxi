@@ -7,7 +7,8 @@
 using namespace std;
 
 
-int main(){
+int main(int argc, char* argv[]){
+    // string address = std::string(argv[1]);
     string address = "locations.csv";
     UTaxi ut(address);
     ut.run();    

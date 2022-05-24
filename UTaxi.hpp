@@ -33,7 +33,6 @@ public:
     ~UTaxi();
     UTaxi(std::string citiesAddress);
     void run();
-    void test();
 };
 
 #endif
