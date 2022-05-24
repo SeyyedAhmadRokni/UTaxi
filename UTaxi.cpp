@@ -16,15 +16,15 @@ UTaxi::UTaxi(std::string citiesAddress){
 
 UTaxi::~UTaxi(){
     for (auto itr = cities.begin(); itr != cities.end(); ++itr){
-        delete[] itr->second;
+        delete itr->second;
     }
     
     for (auto itr = persons.begin(); itr != persons.end(); ++itr){
-        delete[] itr->second; 
+        delete itr->second; 
     }
 
     for (auto itr = trips.begin(); itr != trips.end(); ++itr){
-        delete[] itr->second; 
+        delete itr->second; 
     }
 }
 
@@ -119,6 +119,7 @@ void UTaxi::finishTrip(std::string userName, int id){
     if (!persons.count(userName) ||  !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
+    trips[id]->checkIsTripDriver(userName);
     trips[id]->finish(userName);
 }
 
@@ -145,7 +146,7 @@ Command UTaxi::idenifyCommand(std::string command){
         return GET;
     }
     else{
-        throw UTException(INCORRECT_REQUEST_MASSAGE);
+        throw UTException(ABSENCE_MASSAGE);
     }
 }
 
@@ -254,18 +255,8 @@ void UTaxi::run(){
             std::vector<Command> commands = readCommands(splited[0]);
             std::map<Argument, std::string> arguments = readArguments(splited[1]);
             doCommand(commands, arguments);
-
-            // std::cout << "TIPS:\n";
-            // for (auto itr = trips.begin(); itr != trips.end(); ++itr){
-            //     std::cout << *itr << std::endl;
-            // }
-
-            // std::cout << "PERSONS:\n";
-            // for (auto itr = persons.begin(); itr != persons.end(); ++itr){
-            //     std::cout << *(itr->second) << std::endl; 
-            // }
         }
-        catch(UTException& ex) {
+        catch(UTException& ex){
             ex.showMassage();
         }
         catch(...){

@@ -21,17 +21,18 @@ void Trip::getBy(Driver* driv){
 }
 
 void Trip::finish(std::string user){
-
-    if (!driver->isYou(user)){
-        throw UTException(INCORRECT_REQUEST_MASSAGE);
-    }
     driver->finishTrip();
     status = FINISHED;
     std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
-bool Trip::isForDriver(std::string name){
-    return driver->isYou(name);
+void Trip::checkIsTripDriver(std::string name){
+    if (driver == NULL){
+        throw UTException(ABSENCE_MASSAGE); 
+    }
+    else if(!driver->isYou(name)){
+        throw UTException(ABSENCE_MASSAGE);
+    }
 }
 
 std::ostream& operator<<(std::ostream& os, const Trip& trip){
