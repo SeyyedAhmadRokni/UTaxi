@@ -20,12 +20,6 @@ void Trip::getBy(Driver* driv){
     std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
-void Trip::finish(std::string user){
-    driver->finishTrip();
-    status = FINISHED;
-    std::cout << SUCCESS_MASSAGE << std::endl;
-}
-
 void Trip::checkIsTripDriver(std::string name){
     if (driver == NULL){
         throw UTException(ABSENCE_MASSAGE); 
@@ -33,6 +27,13 @@ void Trip::checkIsTripDriver(std::string name){
     else if(!driver->isYou(name)){
         throw UTException(ABSENCE_MASSAGE);
     }
+}
+
+void Trip::finish(std::string user){
+    checkIsTripDriver(user);
+    driver->finishTrip();
+    status = FINISHED;
+    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const Trip& trip){
