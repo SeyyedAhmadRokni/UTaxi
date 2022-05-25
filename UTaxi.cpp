@@ -201,46 +201,68 @@ std::vector<Command> UTaxi::readCommands(std::string cmd){
     return commands;
 }
 
-void UTaxi::doCommand(std::vector<Command> commands, 
+
+void UTaxi::manageGetCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments){
+    if (commands[1] == TRIPS){
+        if (arguments.count(ID)){
+            showATrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
+        }
+        else{
+            showAllTrips(arguments.at(USERNAME));
+        }
+    }
+    else{
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
+}
+
+void UTaxi::managePostCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments){
+    if (commands[1] == SIGNUP){
+        signup(arguments.at(USERNAME),
+            identifyRole(arguments.at(ROLE)));
+    }
+    else if (commands[1] == TRIPS){
+        startTrip(arguments.at(USERNAME), arguments.at(ORIGIN),
+            arguments.at(DESTINATION));
+    }
+    else if (commands[1] == FINISH){
+        finishTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
+    }
+    else if (commands[1] == ACCEPT){
+        acceptTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
+    }
+    else{
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
+}
+
+void UTaxi::manageDeleteCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments){
+    if (commands[1] == TRIPS){
+        cancleTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
+    }
+    else{
+        throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
+}
+
+void UTaxi::doCommand(const std::vector<Command>& commands, 
     std::map<Argument, std::string> arguments){
     try{
         if (commands[0] == GET){
-            if (commands[1] == TRIPS){
-                if (arguments.count(ID)){
-                    showATrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
-                }
-                else{
-                    showAllTrips(arguments.at(USERNAME));
-                }
-            }
+            manageGetCommands(commands, arguments);
         }
         else if (commands[0] == POST){
-            if (commands[1] == SIGNUP){
-                signup(arguments.at(USERNAME),
-                    identifyRole(arguments.at(ROLE)));
-            }
-            else if (commands[1] == TRIPS){
-                startTrip(arguments.at(USERNAME), arguments.at(ORIGIN),
-                    arguments.at(DESTINATION));
-            }
-            else if (commands[1] == FINISH){
-                finishTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
-            }
-            else if (commands[1] == ACCEPT){
-                acceptTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
-            }
+            managePostCommands(commands, arguments);
         }
         else if (commands[0] == DELETE){
-            if (commands[1] == TRIPS){
-                cancleTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
-            }
+            manageDeleteCommands(commands, arguments);
+        }
+        else {
+            throw UTException(INCORRECT_REQUEST_MASSAGE);
         }
     }
     catch(UTException& ex){
         throw ex;
-    }
-    catch(...){
-        throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
 }
 

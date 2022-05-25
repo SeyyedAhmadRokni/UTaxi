@@ -26,7 +26,10 @@ private:
     Role identifyRole(std::string role);
     Argument identifyArgument(std::string arg);
     Command idenifyCommand(std::string commnad);
-    void doCommand(std::vector<Command> commands, 
+    void manageGetCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
+    void managePostCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
+    void manageDeleteCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
+    void doCommand(const std::vector<Command>& commands, 
         std::map<Argument, std::string> arguments);
 
 public:
