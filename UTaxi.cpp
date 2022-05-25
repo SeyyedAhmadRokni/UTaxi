@@ -11,11 +11,8 @@
 #include "UTException.hpp"
 #include "Trip.hpp"
 
-bool UTaxi::sortById(Trip* first, Trip* second){
-    return first->getId() < second->getId();
-}
-bool UTaxi::sortByCostDecreasing(Trip* first, Trip* second){
-    return first->calculatePrice() > second->calculatePrice();
+bool sortByCostDecreasing(const std::pair<int, Trip* >& first, const std::pair<int, Trip* >& second){
+    return first.second->calculatePrice() > second.second->calculatePrice();
 }
 UTaxi::UTaxi(std::string citiesAddress){
     readCities(citiesAddress);
@@ -93,11 +90,11 @@ void UTaxi::showAllTrips(std::string userName, bool sortByCost){
     }
     else{
         if (sortByCost){
-            sort(trips.begin(), trips.end(), sortByCostDecreasing);
-            for (auto itr = trips.begin(); itr != trips.end(); ++itr){
+            std::vector <std::pair<int, Trip*> > tripVector(trips.begin(), trips.end());
+            sort(tripVector.begin(), tripVector.end(), sortByCostDecreasing);
+            for (auto itr = tripVector.begin(); itr != tripVector.end(); ++itr){
                 std::cout << *(itr->second) << std::endl;
             }
-            sort(trips.begin(), trips.end(), sortById);
         }
         else{
             for (auto itr = trips.begin(); itr != trips.end(); ++itr){
