@@ -41,7 +41,6 @@ public:
     void run();
 };
 
-bool sortById(std::pair<const int, Trip* >& first, std::pair<const int, Trip* >& second);
 bool sortByCostDecreasing(const std::pair<int, Trip* >& first, const std::pair<int, Trip* >& second);
 
 

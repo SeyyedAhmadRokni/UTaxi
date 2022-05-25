@@ -35,14 +35,14 @@ UTaxi::~UTaxi(){
 void UTaxi::readCities(std::string listAddress){
     std::ifstream file;
     file.open(listAddress);
-    std::string readed;
-    getline(file, readed);
-    while(getline(file, readed)){
-        std::vector<std::string> splited = split(readed, ',');
-        std::string cityName = splited[0];
+    std::string read;
+    getline(file, read);
+    while(getline(file, read)){
+        std::vector<std::string> splitted = split(read, ',');
+        std::string cityName = splitted[0];
         areas.insert({cityName, 
-            new Area(cityName, std::stod(splited[1]), std::stod(splited[2])
-            , std::stoi(splited[3]))
+            new Area(cityName, std::stod(splitted[1]), std::stod(splitted[2])
+            , std::stoi(splitted[3]))
             });
     }
 }

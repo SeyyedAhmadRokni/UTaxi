@@ -8,7 +8,9 @@ using namespace std;
 
 
 int main(int argc, char* argv[]){
-    string areasAddress = std::string(argv[1]);
+    // string areasAddress = std::string(argv[1]);
+    string areasAddress = "locations.csv";
+
     UTaxi ut(areasAddress);
     ut.run();    
 }
