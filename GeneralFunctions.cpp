@@ -3,14 +3,14 @@
 #include <bits/stdc++.h>
 #include "GeneralFunctions.hpp"
 
-std::vector<std::string> split (std::string input, char seprator){
-    std::vector<std::string> splited;
+std::vector<std::string> split (std::string input, char separator){
+    std::vector<std::string> splitted;
     std::string current = "";
     for (int i = 0; i < input.size(); i++)
     {
-        if (input[i] == seprator){
+        if (input[i] == separator){
             if (!current.empty())
-                splited.push_back(current);
+                splitted.push_back(current);
             current = "";
         }
         else{
@@ -19,10 +19,19 @@ std::vector<std::string> split (std::string input, char seprator){
     }
 
     if (!current.empty()){
-        splited.push_back(current);
+        splitted.push_back(current);
     }
     
-    return splited;
+    return splitted;
+}
+
+bool stringToBool(std::string input){
+    if (input == "yes"){
+        return true;
+    }
+    else (input == "no"){
+        return false;
+    }
 }
 
 #endif

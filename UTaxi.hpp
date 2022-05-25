@@ -18,19 +18,20 @@ private:
         std::string destination);
     void showAllTrips(std::string userName);
     void showATrip(std::string userName, int id);
-    void cancleTrip(std::string userName, int id);
+    void cancelTrip(std::string userName, int id);
     void acceptTrip(std::string userName, int id);
     void finishTrip(std::string userName, int id);
     std::map<Argument, std::string> readArguments(std::string args);
     std::vector<Command> readCommands(std::string cmd);
     Role identifyRole(std::string role);
     Argument identifyArgument(std::string arg);
-    Command idenifyCommand(std::string commnad);
+    Command identifyCommand(std::string command);
     void manageGetCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
     void managePostCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
     void manageDeleteCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
     void doCommand(const std::vector<Command>& commands, 
         std::map<Argument, std::string> arguments);
+    void getTripCost();
 
 public:
     ~UTaxi();

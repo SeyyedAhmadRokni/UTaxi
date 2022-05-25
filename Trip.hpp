@@ -14,7 +14,7 @@ private:
     Area* destination;
     TripStatus status = WAITING;
     double price;
-    bool inHoury;
+    bool inHurry;
 public:
     double calculatePrice();
     Trip(int id, Passenger* passenger,
@@ -23,7 +23,7 @@ public:
     void checkIsTripDriver(std::string name);
     void finish(std::string user);
     friend std::ostream& operator<<(std::ostream& os, const Trip& trip);
-    void cancle(std::string user);
+    void cancel(std::string user);
     int getId();
 };
 

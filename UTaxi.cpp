@@ -98,11 +98,11 @@ void UTaxi::showATrip(std::string userName, int id){
     std::cout << *trips[id] << std::endl;
 }
 
-void UTaxi::cancleTrip(std::string userName, int id){
+void UTaxi::cancelTrip(std::string userName, int id){
     if (!persons.count(userName) || !trips.count(id)){
         throw UTException(ABSENCE_MASSAGE);
     }
-    trips[id]->cancle(userName);
+    trips[id]->cancel(userName);
     delete trips[id];
     trips.erase(id);
 }
@@ -123,7 +123,7 @@ void UTaxi::finishTrip(std::string userName, int id){
     trips[id]->finish(userName);
 }
 
-Command UTaxi::idenifyCommand(std::string command){
+Command UTaxi::identifyCommand(std::string command){
     if (command == "signup"){
         return SIGNUP;
     }
@@ -181,11 +181,8 @@ Argument UTaxi::identifyArgument(std::string arg){
     else if (arg == "role"){
         return ROLE;
     }
-    else if (arg == "yes"){
-        return YES;
-    }
-    else if(arg == "no"){
-        return NO;
+    else if (arg == "in_houry"){
+        return IN_HURRY;
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);
@@ -196,7 +193,7 @@ std::vector<Command> UTaxi::readCommands(std::string cmd){
     std::vector<std::string> splited = split(cmd, ' ');
     std::vector<Command> commands;
     for (int i = 0; i < splited.size(); i++){
-        commands.push_back(idenifyCommand(splited[i]));
+        commands.push_back(identifyCommand(splited[i]));
     }
     return commands;
 }
@@ -207,9 +204,13 @@ void UTaxi::manageGetCommands(const std::vector<Command>& commands, const std::m
         if (arguments.count(ID)){
             showATrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
         }
+        else if (commands[1] == COST){
+
+        }
         else{
             showAllTrips(arguments.at(USERNAME));
         }
+
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);
@@ -238,7 +239,7 @@ void UTaxi::managePostCommands(const std::vector<Command>& commands, const std::
 
 void UTaxi::manageDeleteCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments){
     if (commands[1] == TRIPS){
-        cancleTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
+        cancelTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);

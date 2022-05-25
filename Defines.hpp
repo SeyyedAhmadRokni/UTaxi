@@ -22,6 +22,7 @@ enum Command{
     DELETE,
     GET,
     ACCEPT,
+    COST,
 };
 
 enum Argument{
@@ -30,10 +31,11 @@ enum Argument{
     ORIGIN,
     DESTINATION,
     ROLE, 
+    IN_HURRY,
 };
 
 const double BASE_PRICE = 1000;
-const double IN_HOURY_FACTOR = 1.2;
+const double IN_HURRY_FACTOR = 1.2;
 
 const std::string SUCCESS_MASSAGE = "OK";
 const std::string EMPTY_MASSAGE = "EMPTY";

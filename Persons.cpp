@@ -21,7 +21,7 @@ void Person::startTrip(){
     throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
-void Person::cancleTrip(std::string user){
+void Person::cancelTrip(std::string user){
     throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
@@ -47,7 +47,7 @@ void Passenger::startTrip(){
     }
 }
 
-void Passenger::cancleTrip(std::string user){
+void Passenger::cancelTrip(std::string user){
     if (user != userName){
         throw UTException(PERMISSION_DENIED_MASSAGE);
     }

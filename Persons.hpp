@@ -13,7 +13,7 @@ public:
     virtual void startTrip();
     virtual void showTrip();
     void finishTrip();
-    virtual void cancleTrip(std::string user);
+    virtual void cancelTrip(std::string user);
     virtual void getTrip();
     friend std::ostream& operator<<(std::ostream& os, const Person& person);
     std::string getName();
@@ -27,7 +27,7 @@ private:
 public:
     Passenger(std::string userName);
     void startTrip();
-    virtual void cancleTrip(std::string user);
+    virtual void cancelTrip(std::string user);
 };
 
 class Driver: public Person{

@@ -9,19 +9,19 @@
 double Trip::calculatePrice(){
     double cost = origin->dist(*destination) * BASE_PRICE * 
         (origin->getTrafficFactor() + destination->getTrafficFactor());
-    if (inHoury){
-        return cost * IN_HOURY_FACTOR;
+    if (inHurry){
+        return cost * IN_HURRY_FACTOR;
     }
     return cost;
 }
 
 Trip::Trip(int id, Passenger* passenger,
-    Area* origin, Area* destination, bool houry){
+    Area* origin, Area* destination, bool hurry){
     this->id = id;
     this->passenger = passenger;
     this->origin = origin;
     this->destination = destination;
-    inHoury = houry;
+    inHurry = hurry;
     price = calculatePrice();
 }
 
@@ -64,11 +64,11 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
     return os;
 }
 
-void Trip::cancle(std::string user){
+void Trip::cancel(std::string user){
     if (status == TRAVELING || status == FINISHED){
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
-    passenger->cancleTrip(user);
+    passenger->cancelTrip(user);
     if (driver != NULL){
         driver->finishTrip();
     }
