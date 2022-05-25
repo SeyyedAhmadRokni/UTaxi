@@ -29,7 +29,7 @@ bool stringToBool(std::string input){
     if (input == "yes"){
         return true;
     }
-    else (input == "no"){
+    else if (input == "no"){
         return false;
     }
 }

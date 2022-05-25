@@ -75,7 +75,11 @@ void Trip::cancel(std::string user){
     std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
+TripStatus Trip::getStatus(){
+    return status;
+}
 int Trip::getId(){
     return id;
 }
+
 #endif

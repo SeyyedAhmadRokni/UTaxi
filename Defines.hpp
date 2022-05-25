@@ -32,6 +32,7 @@ enum Argument{
     DESTINATION,
     ROLE, 
     IN_HURRY,
+    SORT_BY_COST,
 };
 
 const double BASE_PRICE = 1000;

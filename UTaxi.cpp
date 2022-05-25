@@ -2,6 +2,7 @@
 #define _UTAXI_
 
 #include <bits/stdc++.h>
+#include <algorithm>
 #include "UTaxi.hpp"
 #include "GeneralFunctions.hpp"
 #include "Defines.hpp"
@@ -10,6 +11,12 @@
 #include "UTException.hpp"
 #include "Trip.hpp"
 
+bool UTaxi::sortById(Trip* first, Trip* second){
+    return first->getId() < second->getId();
+}
+bool UTaxi::sortByCostDecreasing(Trip* first, Trip* second){
+    return first->calculatePrice() > second->calculatePrice();
+}
 UTaxi::UTaxi(std::string citiesAddress){
     readCities(citiesAddress);
 }
@@ -63,19 +70,20 @@ void UTaxi::signup(std::string userName, Role role){
 }
 
 void UTaxi::startTrip(std::string userName, std::string origin,
-    std::string destination){
+    std::string destination, bool hurry){
     if (!persons.count(userName) || !areas.count(origin)
         || !areas.count(destination)){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->startTrip();
-    trips.insert({trips.size()+1,
-        new Trip(trips.size()+1, (Passenger*)persons.at(userName),
-        areas[origin], areas[destination] )});
+    lastTripId++;
+    trips.insert({lastTripId,
+        new Trip(lastTripId, (Passenger*)persons.at(userName),
+        areas[origin], areas[destination], hurry)});
     std::cout << trips[trips.size()]->getId() << std::endl;
 }
 
-void UTaxi::showAllTrips(std::string userName){
+void UTaxi::showAllTrips(std::string userName, bool sortByCost){
     if (!persons.count(userName)){
         throw UTException(ABSENCE_MASSAGE);
     }
@@ -84,8 +92,17 @@ void UTaxi::showAllTrips(std::string userName){
         std::cout << EMPTY_MASSAGE << std::endl;
     }
     else{
-        for (auto itr = trips.begin(); itr != trips.end(); ++itr){
-            std::cout << *(itr->second) << std::endl;
+        if (sortByCost){
+            sort(trips.begin(), trips.end(), sortByCostDecreasing);
+            for (auto itr = trips.begin(); itr != trips.end(); ++itr){
+                std::cout << *(itr->second) << std::endl;
+            }
+            sort(trips.begin(), trips.end(), sortById);
+        }
+        else{
+            for (auto itr = trips.begin(); itr != trips.end(); ++itr){
+                std::cout << *(itr->second) << std::endl;
+            }
         }
     }
 }
@@ -181,8 +198,11 @@ Argument UTaxi::identifyArgument(std::string arg){
     else if (arg == "role"){
         return ROLE;
     }
-    else if (arg == "in_houry"){
+    else if (arg == "in_hurry"){
         return IN_HURRY;
+    }
+    else if (arg == "sort_by_cost"){
+        return SORT_BY_COST;
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);
@@ -198,19 +218,19 @@ std::vector<Command> UTaxi::readCommands(std::string cmd){
     return commands;
 }
 
-
 void UTaxi::manageGetCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments){
     if (commands[1] == TRIPS){
         if (arguments.count(ID)){
             showATrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
         }
-        else if (commands[1] == COST){
-
-        }
         else{
-            showAllTrips(arguments.at(USERNAME));
+            showAllTrips(arguments.at(USERNAME),
+                stringToBool(arguments.at(SORT_BY_COST)));
         }
-
+    }
+    else if (commands[1] == COST){
+        getTripCost(arguments.at(USERNAME), arguments.at(ORIGIN),
+            arguments.at(DESTINATION), stringToBool(arguments.at(IN_HURRY)));
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);
@@ -224,7 +244,7 @@ void UTaxi::managePostCommands(const std::vector<Command>& commands, const std::
     }
     else if (commands[1] == TRIPS){
         startTrip(arguments.at(USERNAME), arguments.at(ORIGIN),
-            arguments.at(DESTINATION));
+            arguments.at(DESTINATION), stringToBool(arguments.at(IN_HURRY)));
     }
     else if (commands[1] == FINISH){
         finishTrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
@@ -276,6 +296,16 @@ std::map<Argument, std::string> UTaxi::readArguments(std::string args){
     return arguments;
 }
 
+void UTaxi::getTripCost(std::string userName, std::string origin,
+    std::string destination, bool hurry){
+    if (!persons.count(userName) || !areas.count(destination)
+        || !areas.count(origin)){
+        throw UTException(ABSENCE_MASSAGE);
+    }
+    persons[userName]->startTrip();
+    Trip trip (lastTripId+1, (Passenger *)persons[userName], areas[origin],
+        areas[destination], hurry);
+}
 void UTaxi::run(){
     std::string input;
     while(getline(std::cin, input)){
