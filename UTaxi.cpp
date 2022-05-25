@@ -37,7 +37,8 @@ void UTaxi::readCities(std::string listAddress){
         std::vector<std::string> splited = split(readed, ',');
         std::string cityName = splited[0];
         areas.insert({cityName, 
-            new Area(cityName, std::stod(splited[1]), std::stod(splited[2]))
+            new Area(cityName, std::stod(splited[1]), std::stod(splited[2])
+            , std::stoi(splited[3]))
             });
     }
 }
@@ -70,7 +71,7 @@ void UTaxi::startTrip(std::string userName, std::string origin,
     persons.at(userName)->startTrip();
     trips.insert({trips.size()+1,
         new Trip(trips.size()+1, (Passenger*)persons.at(userName),
-        origin, destination )});
+        areas[origin], areas[destination] )});
     std::cout << trips[trips.size()]->getId() << std::endl;
 }
 
@@ -144,6 +145,9 @@ Command UTaxi::idenifyCommand(std::string command){
     else if (command == "GET"){
         return GET;
     }
+    else if (command == "cost"){
+        return COST;
+    }
     else{
         throw UTException(ABSENCE_MASSAGE);
     }
@@ -176,6 +180,12 @@ Argument UTaxi::identifyArgument(std::string arg){
     }
     else if (arg == "role"){
         return ROLE;
+    }
+    else if (arg == "yes"){
+        return YES;
+    }
+    else if(arg == "no"){
+        return NO;
     }
     else{
         throw UTException(INCORRECT_REQUEST_MASSAGE);

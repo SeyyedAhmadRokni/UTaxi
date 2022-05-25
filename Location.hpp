@@ -7,7 +7,8 @@ private:
 
 public:
     Location(double latitude, double logitude);
-
+    double getLatitude();
+    double getLongitude();
 };
 
 #endif

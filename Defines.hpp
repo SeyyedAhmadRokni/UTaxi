@@ -32,6 +32,9 @@ enum Argument{
     ROLE, 
 };
 
+const double BASE_PRICE = 1000;
+const double IN_HOURY_FACTOR = 1.2;
+
 const std::string SUCCESS_MASSAGE = "OK";
 const std::string EMPTY_MASSAGE = "EMPTY";
 const std::string ABSENCE_MASSAGE = "Not Found";

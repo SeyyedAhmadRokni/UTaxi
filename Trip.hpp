@@ -3,18 +3,22 @@
 #include <bits/stdc++.h>
 #include "Defines.hpp"
 #include "Persons.hpp"
+#include "Area.hpp"
 
 class Trip{
 private:
     int id;
     Driver* driver = NULL;
     Passenger* passenger;
-    std::string origin;
-    std::string destination;
+    Area* origin;
+    Area* destination;
     TripStatus status = WAITING;
+    double price;
+    bool inHoury;
 public:
+    double calculatePrice();
     Trip(int id, Passenger* passenger,
-        std::string origin, std::string destination);
+        Area* origin, Area* destination, bool houry);
     void getBy(Driver* driver);
     void checkIsTripDriver(std::string name);
     void finish(std::string user);

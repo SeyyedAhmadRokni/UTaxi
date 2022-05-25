@@ -6,12 +6,23 @@
 #include "Persons.hpp"
 #include "UTException.hpp"
 
+double Trip::calculatePrice(){
+    double cost = origin->dist(*destination) * BASE_PRICE * 
+        (origin->getTrafficFactor() + destination->getTrafficFactor());
+    if (inHoury){
+        return cost * IN_HOURY_FACTOR;
+    }
+    return cost;
+}
+
 Trip::Trip(int id, Passenger* passenger,
-    std::string origin, std::string destination){
+    Area* origin, Area* destination, bool houry){
     this->id = id;
     this->passenger = passenger;
     this->origin = origin;
     this->destination = destination;
+    inHoury = houry;
+    price = calculatePrice();
 }
 
 void Trip::getBy(Driver* driv){
@@ -48,7 +59,7 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
         statusToString = "finished";
     }
     os << trip.id << ' ' << trip.passenger->getName() << ' '<< trip.origin << ' ' << trip.destination
-        << ' ' << statusToString ;
+        << ' ' << statusToString << ' ' << trip.price;
 
     return os;
 }

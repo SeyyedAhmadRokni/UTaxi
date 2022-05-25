@@ -7,5 +7,11 @@ Location::Location(double latitude, double longtude){
     this->longitude = longtude;
 }
 
+double Location::getLatitude(){
+    return latitude;
+}
+double Location::getLongitude(){
+    return longitude;
+}
 
 #endif
