@@ -12,7 +12,7 @@
 #include "Trip.hpp"
 
 bool sortByCostDecreasing(const std::pair<int, Trip* >& first, const std::pair<int, Trip* >& second){
-    return first.second->calculatePrice() > second.second->calculatePrice();
+    return first.second->calculateCost() > second.second->calculateCost();
 }
 UTaxi::UTaxi(std::string citiesAddress){
     readCities(citiesAddress);
@@ -77,7 +77,7 @@ void UTaxi::startTrip(std::string userName, std::string origin,
     trips.insert({lastTripId,
         new Trip(lastTripId, (Passenger*)persons.at(userName),
         areas[origin], areas[destination], hurry)});
-    std::cout << trips[trips.size()]->getId() << std::endl;
+    std::cout << trips[lastTripId]->getId() << std::endl;
 }
 
 void UTaxi::showAllTrips(std::string userName, bool sortByCost){
@@ -233,7 +233,6 @@ void UTaxi::manageGetCommands(const std::vector<Command>& commands, const std::m
         throw UTException(INCORRECT_REQUEST_MASSAGE);
     }
 }
-
 void UTaxi::managePostCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments){
     if (commands[1] == SIGNUP){
         signup(arguments.at(USERNAME),
@@ -286,9 +285,9 @@ void UTaxi::doCommand(const std::vector<Command>& commands,
 
 std::map<Argument, std::string> UTaxi::readArguments(std::string args){
     std::map<Argument, std::string> arguments;
-    std::vector<std::string> splited = split(args, ' ');
-    for (int i = 0; i < splited.size(); i+=2){
-        arguments.insert({identifyArgument(splited[i]), splited[i+1]});
+    std::vector<std::string> splitted = split(args, ' ');
+    for (int i = 0; i < splitted.size(); i+=2){
+        arguments.insert({identifyArgument(splitted[i]), splitted[i+1]});
     }
     return arguments;
 }
@@ -299,9 +298,10 @@ void UTaxi::getTripCost(std::string userName, std::string origin,
         || !areas.count(origin)){
         throw UTException(ABSENCE_MASSAGE);
     }
-    persons[userName]->startTrip();
+    persons[userName]->getTripCost();
     Trip trip (lastTripId+1, (Passenger *)persons[userName], areas[origin],
         areas[destination], hurry);
+    std::cout << trip.calculateCost() << std::endl;
 }
 void UTaxi::run(){
     std::string input;

@@ -6,9 +6,10 @@
 #include "Persons.hpp"
 #include "UTException.hpp"
 
-double Trip::calculatePrice(){
+double Trip::calculateCost(){
     double cost = origin->dist(*destination) * BASE_PRICE * 
         (origin->getTrafficFactor() + destination->getTrafficFactor());
+    
     if (inHurry){
         return cost * IN_HURRY_FACTOR;
     }
@@ -22,7 +23,7 @@ Trip::Trip(int id, Passenger* passenger,
     this->origin = origin;
     this->destination = destination;
     inHurry = hurry;
-    price = calculatePrice();
+    price = calculateCost();
 }
 
 void Trip::getBy(Driver* driv){

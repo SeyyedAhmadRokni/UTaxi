@@ -33,6 +33,10 @@ void Person::finishTrip(){
     throw UTException(PERMISSION_DENIED_MASSAGE);
 }
 
+void Person::getTripCost(){
+    throw UTException(PERMISSION_DENIED_MASSAGE);
+}
+
 std::ostream& operator<<(std::ostream& os, const Person& person){
     os << person.userName << std::endl;
     return os;
@@ -58,6 +62,10 @@ void Passenger::cancelTrip(std::string user){
 
 Passenger::Passenger(std::string userName): Person(userName){
     
+}
+
+void Passenger::getTripCost(){
+
 }
 
 Driver::Driver(std::string userName): Person(userName){

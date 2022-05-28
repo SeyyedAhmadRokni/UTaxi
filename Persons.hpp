@@ -9,7 +9,7 @@ protected:
     std::string userName;
     bool isInTrip = false;
 public:
-    Person(std::string usernName);
+    Person(std::string userName);
     virtual void startTrip();
     virtual void showTrip();
     void finishTrip();
@@ -17,6 +17,7 @@ public:
     virtual void getTrip();
     friend std::ostream& operator<<(std::ostream& os, const Person& person);
     std::string getName();
+    virtual void getTripCost();
 };
 
 std::ostream& operator<<(std::ostream& os, const Person& person);
@@ -28,6 +29,7 @@ public:
     Passenger(std::string userName);
     void startTrip();
     virtual void cancelTrip(std::string user);
+    virtual void getTripCost();
 };
 
 class Driver: public Person{

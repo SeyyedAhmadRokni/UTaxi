@@ -16,7 +16,7 @@ private:
     double price;
     bool inHurry;
 public:
-    double calculatePrice();
+    double calculateCost();
     Trip(int id, Passenger* passenger,
         Area* origin, Area* destination, bool hurry);
     void getBy(Driver* driver);
