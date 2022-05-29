@@ -35,7 +35,7 @@ enum Argument{
     SORT_BY_COST,
 };
 
-const double BASE_PRICE = 1000;
+const double BASE_PRICE = 10000;
 const double IN_HURRY_FACTOR = 1.2;
 
 const std::string SUCCESS_MASSAGE = "OK";

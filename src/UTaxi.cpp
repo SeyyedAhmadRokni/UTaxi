@@ -301,7 +301,7 @@ void UTaxi::getTripCost(std::string userName, std::string origin,
     persons[userName]->getTripCost();
     Trip trip (lastTripId+1, (Passenger *)persons[userName], areas[origin],
         areas[destination], hurry);
-    std::cout << trip.calculateCost() << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << trip.calculateCost() << std::endl;
 }
 void UTaxi::run(){
     std::string input;

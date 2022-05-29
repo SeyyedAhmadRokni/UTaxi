@@ -60,7 +60,7 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
         statusToString = "finished";
     }
     os << trip.id << ' ' << trip.passenger->getName() << ' '<< *trip.origin << ' ' << *trip.destination
-        << ' ' << statusToString << ' ' << trip.price;
+        << ' ' << trip.price << ' ' << statusToString;
 
     return os;
 }
