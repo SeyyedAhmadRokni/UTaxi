@@ -8,18 +8,22 @@
 using namespace std;
 
 
-
 Response* API::cancelTripHandler::callback(Request* req){
     Response *res = new Response();
     res->setHeader("Content-Type", "text/html");
     string username = req->getBodyParam("username");
     int id = stoi(req->getBodyParam("id"));
-    utaxi->cancelTrip(username, id);
+}
+
+API::signupHandler::signupHandler(API* parentApi){
+  api = parentApi;
 }
 
 Response* API::signupHandler::callback(Request *req) {
     Response *res = new Response();
     res->setHeader("Content-Type", "text/html");
+    string username = req->getBodyParam("username");
+    cout << "req body:" << req->getBody() << endl;
     return res;
 }
 
@@ -53,7 +57,10 @@ void API::run(){
         server.get("/trip-request", new ShowPage("static/src/trip-request.html"));
         server.get("/trips-list", new ShowPage("static/src/trip-list-request.html"));
         server.get("/cancel-trip", new ShowPage("static/src/cancel-trip.html"));
-        server.post("/signup", new signupHandler());
+        server.get("/css-style", new ShowFile("static/src/style.css", "text/css"));
+        server.get("/images/taxi", new ShowImage("static/image/draw.png"));
+        server.get("/images/ut_logo", new ShowImage("static/image/logo.png"));
+        server.post("/signup", new signupHandler(this));
         server.post("/trip-request", new tripRequestHandler());
         server.run();
     }

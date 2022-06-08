@@ -15,7 +15,10 @@ private:
 
   class signupHandler : public RequestHandler {
   public:
+    signupHandler(API* );
     Response *callback(Request *);
+  private:
+    API* api;
   };
 
 
