@@ -7,8 +7,8 @@ UTException::UTException(std::string massage){
     this->massage = massage;
 }
 
-void UTException::showMassage(){
-    std::cout << massage << std::endl;
+std::string UTException::getMassage(){
+    return massage;
 }
 
 

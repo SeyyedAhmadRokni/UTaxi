@@ -16,7 +16,7 @@ private:
 public:
     void readCities(std::string listAddress);
     void signup(std::string userName, Role role);
-    void startTrip(std::string userName, std::string origin,
+    int startTrip(std::string userName, std::string origin,
         std::string destination, bool hurry);
     void showAllTrips(std::string userName, bool sortByCost);
     void showATrip(std::string userName, int id);
@@ -28,7 +28,7 @@ public:
     Role identifyRole(std::string role);
     Argument identifyArgument(std::string arg);
     Command identifyCommand(std::string command);
-    void getTripCost(std::string userName, std::string origin,
+    double getTripCost(std::string userName, std::string origin,
         std::string destination, bool hurry);
     void manageGetCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);
     void managePostCommands(const std::vector<Command>& commands, const std::map<Argument, std::string>& arguments);

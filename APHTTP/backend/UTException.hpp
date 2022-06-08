@@ -8,7 +8,7 @@ private:
 
 public:
     UTException(std::string m);
-    void showMassage();
+    std::string getMassage();
 
 };
 

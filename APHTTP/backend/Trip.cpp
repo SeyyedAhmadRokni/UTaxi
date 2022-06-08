@@ -73,7 +73,6 @@ void Trip::cancel(std::string user){
     if (driver != NULL){
         driver->finishTrip();
     }
-    std::cout << SUCCESS_MASSAGE << std::endl;
 }
 
 TripStatus Trip::getStatus(){

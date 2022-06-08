@@ -4,34 +4,85 @@
 #include <bits/stdc++.h>
 #include "UTaxi.hpp"
 #include "UTException.hpp"
+#include "GeneralFunctions.hpp"
 
 using namespace std;
 
-
-Response* API::cancelTripHandler::callback(Request* req){
-    Response *res = new Response();
-    res->setHeader("Content-Type", "text/html");
-    string username = req->getBodyParam("username");
-    int id = stoi(req->getBodyParam("id"));
+Response* API::showMassage(string massage){
+  Response *res = new Response();
+  res->setHeader("Content-Type", "text/html");
+  ifstream file;
+  file.open("static/src/massage.html");
+  if(!file.is_open()){
+    cout << "file baz nashode" << endl;
+  }
+  string readed = "";
+  string buffer;
+  while (getline(file, buffer)) {
+    readed += buffer += "\n";
+  }
+  string replaced = "[massage]";
+  readed.replace(readed.find(replaced), replaced.length(), massage);
+  res->setBody(readed);
+  return res;
 }
 
-API::signupHandler::signupHandler(API* parentApi){
-  api = parentApi;
+
+API::cancelTripHandler::cancelTripHandler(UTaxi* taxiService){
+  utaxi = taxiService;
+}
+
+Response* API::cancelTripHandler::callback(Request* req){
+  try{
+    string username = req->getBodyParam("username");
+    int id = stoi(req->getBodyParam("trip-id"));
+    utaxi->cancelTrip(username, id);
+    return showMassage(SUCCESS_MASSAGE);
+  }
+  catch(UTException& ex){
+    cout << "break!" << endl;
+    return showMassage(ex.getMassage());
+  }
+}
+
+API::signupHandler::signupHandler(UTaxi* taxiService){
+  utaxi = taxiService;
 }
 
 Response* API::signupHandler::callback(Request *req) {
-    Response *res = new Response();
-    res->setHeader("Content-Type", "text/html");
+  try{
     string username = req->getBodyParam("username");
-    cout << "req body:" << req->getBody() << endl;
-    return res;
+    Role role = utaxi->identifyRole(req->getBodyParam("role"));
+    utaxi->signup(username, role);
+    return showMassage(SUCCESS_MASSAGE);
+  }
+  catch(UTException& ex){
+    return showMassage(ex.getMassage());
+  }
 }
 
+API::tripRequestHandler::tripRequestHandler(UTaxi* taxiService){
+  utaxi = taxiService;
+}
 Response* API::tripRequestHandler::callback(Request *req){
-    Response *res = new Response();
-    res->setHeader("Content-Type", "text/html");
-
-    return res;
+  try{
+    string username = req->getBodyParam("username");
+    string origin = req->getBodyParam("origin");
+    string destination = req->getBodyParam("destination");
+    bool inHurry = stringToBool(req->getBodyParam("in_hurry"));
+    string button = req->getBodyParam("button");
+    if (button == "calculate-cost"){
+      double cost = utaxi->getTripCost(username, origin, destination, inHurry);
+      return showMassage("Trip cost : " + to_string(cost));
+    }
+    else if (button == "request"){
+      int tripId = utaxi->startTrip(username, origin, destination, inHurry);
+      return showMassage("Trip id : " + to_string(tripId));
+    }
+  }
+  catch(UTException& ex){
+    return showMassage(ex.getMassage());
+  }
   
 }
 
@@ -60,15 +111,18 @@ void API::run(){
         server.get("/css-style", new ShowFile("static/src/style.css", "text/css"));
         server.get("/images/taxi", new ShowImage("static/image/draw.png"));
         server.get("/images/ut_logo", new ShowImage("static/image/logo.png"));
-        server.post("/signup", new signupHandler(this));
-        server.post("/trip-request", new tripRequestHandler());
+        server.get("/massage", new ShowFile("static/src/massage.html", "text/html"));
+        server.post("/signup", new signupHandler(utaxi));
+        server.post("/trip-request", new tripRequestHandler(utaxi));
+        server.post("/cancel-trip", new cancelTripHandler(utaxi));
+        server.post("/trips-list", new );
         server.run();
     }
-    catch (Server::Exception e) {
+    catch (Server::Exception& e) {
         std::cerr << e.getMessage() << std::endl;
     }
-    catch(UTException ex){
-      ex.showMassage();
+    catch(UTException& ex){
+      ex.getMassage();
     }
 }
 
