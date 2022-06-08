@@ -18,9 +18,9 @@ enum Command{
     TRIPS,
     SIGNUP,
     FINISH,
-    POST,
+    POST_C,
     DELETE,
-    GET,
+    GET_C,
     ACCEPT,
     COST,
 };

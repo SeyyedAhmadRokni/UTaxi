@@ -13,6 +13,7 @@ private:
     std::map<int, Trip*> trips;
     int lastTripId = 0;
 
+public:
     void readCities(std::string listAddress);
     void signup(std::string userName, Role role);
     void startTrip(std::string userName, std::string origin,
@@ -35,10 +36,8 @@ private:
     void doCommand(const std::vector<Command>& commands, 
         std::map<Argument, std::string> arguments);
 
-public:
     ~UTaxi();
     UTaxi(std::string citiesAddress);
-    void run();
 };
 
 bool sortByCostDecreasing(const std::pair<int, Trip* >& first, const std::pair<int, Trip* >& second);

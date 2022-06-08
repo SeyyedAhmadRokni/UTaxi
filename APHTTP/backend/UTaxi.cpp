@@ -6,6 +6,7 @@
 #include "UTaxi.hpp"
 #include "GeneralFunctions.hpp"
 #include "Defines.hpp"
+#include "../utils/include.hpp"
 #include "Persons.hpp"
 #include "Area.hpp"
 #include "UTException.hpp"
@@ -150,14 +151,14 @@ Command UTaxi::identifyCommand(std::string command){
     else if (command == "accept"){
         return ACCEPT;
     }
-    else if (command == "POST"){
-        return POST;
+    else if (command == "POST_C"){
+        return POST_C;
     }
     else if (command == "DELETE"){
         return DELETE;
     }
-    else if (command == "GET"){
-        return GET;
+    else if (command == "GET_C"){
+        return GET_C;
     }
     else if (command == "cost"){
         return COST;
@@ -265,10 +266,10 @@ void UTaxi::manageDeleteCommands(const std::vector<Command>& commands, const std
 void UTaxi::doCommand(const std::vector<Command>& commands, 
     std::map<Argument, std::string> arguments){
     try{
-        if (commands[0] == GET){
+        if (commands[0] == GET_C){
             manageGetCommands(commands, arguments);
         }
-        else if (commands[0] == POST){
+        else if (commands[0] == POST_C){
             managePostCommands(commands, arguments);
         }
         else if (commands[0] == DELETE){
@@ -303,27 +304,5 @@ void UTaxi::getTripCost(std::string userName, std::string origin,
         areas[destination], hurry);
     std::cout << std::fixed << std::setprecision(2) << trip.calculateCost() << std::endl;
 }
-void UTaxi::run(){
-    std::string input;
-    while(getline(std::cin, input)){
-        try {
-            std::vector<std::string> splited = split(input, '?');
-            if (splited.empty()){
-                continue;
-            }
-            std::vector<Command> commands = readCommands(splited[0]);
-            std::map<Argument, std::string> arguments = readArguments(splited[1]);
-            doCommand(commands, arguments);
-        }
-        catch(UTException& ex){
-            ex.showMassage();
-        }
-        catch(...){
-
-        }
-        
-    }
-}
-
 
 #endif
