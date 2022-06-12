@@ -81,27 +81,30 @@ int UTaxi::startTrip(std::string userName, std::string origin,
     return trips[lastTripId]->getId();
 }
 
-void UTaxi::showAllTrips(std::string userName, bool sortByCost){
+std::string UTaxi::getAllTrips(std::string userName, bool sortByCost){
     if (!persons.count(userName)){
         throw UTException(ABSENCE_MASSAGE);
     }
     persons.at(userName)->showTrip();
     if (trips.size() == 0){
-        std::cout << EMPTY_MASSAGE << std::endl;
+        return EMPTY_MASSAGE;
     }
     else{
+        std::ostringstream os;
         if (sortByCost){
             std::vector <std::pair<int, Trip*> > tripVector(trips.begin(), trips.end());
             sort(tripVector.begin(), tripVector.end(), sortByCostDecreasing);
             for (auto itr = tripVector.begin(); itr != tripVector.end(); ++itr){
-                std::cout << *(itr->second) << std::endl;
+                os << itr->second->getTableRowData(userName);
+
             }
         }
         else{
             for (auto itr = trips.begin(); itr != trips.end(); ++itr){
-                std::cout << *(itr->second) << std::endl;
+                os << itr->second->getTableRowData(userName);
             }
         }
+        return os.str();
     }
 }
 
@@ -222,7 +225,7 @@ void UTaxi::manageGetCommands(const std::vector<Command>& commands, const std::m
             showATrip(arguments.at(USERNAME), std::stoi(arguments.at(ID)));
         }
         else{
-            showAllTrips(arguments.at(USERNAME),
+            getAllTrips(arguments.at(USERNAME),
                 stringToBool(arguments.at(SORT_BY_COST)));
         }
     }

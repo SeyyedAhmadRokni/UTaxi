@@ -18,7 +18,7 @@ public:
     void signup(std::string userName, Role role);
     int startTrip(std::string userName, std::string origin,
         std::string destination, bool hurry);
-    void showAllTrips(std::string userName, bool sortByCost);
+    std::string getAllTrips(std::string userName, bool sortByCost);
     void showATrip(std::string userName, int id);
     void cancelTrip(std::string userName, int id);
     void acceptTrip(std::string userName, int id);

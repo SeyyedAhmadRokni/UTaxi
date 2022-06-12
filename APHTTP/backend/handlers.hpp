@@ -35,10 +35,28 @@ private:
     UTaxi* utaxi;
   };
 
-  class tempHandler : public TemplateHandler {
+  class tripsListHandler : public RequestHandler {
   public:
-    tempHandler(std::string filePath);
-    std::map<std::string, std::string> handle(Request *req);
+    tripsListHandler(UTaxi*);
+    Response *callback(Request *);
+  private:
+    UTaxi* utaxi;
+  };
+
+  class acceptTripHandler: public RequestHandler {
+  public:
+    acceptTripHandler(UTaxi*);
+    Response *callback(Request *);
+  private:
+    UTaxi* utaxi;
+  };
+
+  class finishTripHandler: public RequestHandler {
+  public:
+    finishTripHandler(UTaxi*);
+    Response *callback(Request *);
+  private:
+    UTaxi* utaxi;
   };
 
   static Response* showMassage(std::string massage);

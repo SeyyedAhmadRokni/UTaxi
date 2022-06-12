@@ -26,6 +26,7 @@ public:
     void cancel(std::string user);
     int getId();
     TripStatus getStatus();
+    std::string getTableRowData(std::string username);
 };
 
 std::ostream& operator<<(std::ostream& os, const Trip& trip);

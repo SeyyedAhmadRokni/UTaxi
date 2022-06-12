@@ -13,9 +13,6 @@ Response* API::showMassage(string massage){
   res->setHeader("Content-Type", "text/html");
   ifstream file;
   file.open("static/src/massage.html");
-  if(!file.is_open()){
-    cout << "file baz nashode" << endl;
-  }
   string readed = "";
   string buffer;
   while (getline(file, buffer)) {
@@ -86,15 +83,65 @@ Response* API::tripRequestHandler::callback(Request *req){
   
 }
 
-API::tempHandler::tempHandler(string filePath) : TemplateHandler(filePath) {}
-
-map<string, string> API::tempHandler::handle(Request *req) {
-    map<string, string> context;
-    string newName = "I am " + req->getQueryParam("name");
-    context["name"] = newName;
-    context["color"] = req->getQueryParam("color");
-    return context;
+API::acceptTripHandler::acceptTripHandler(UTaxi* utaxiService){
+  utaxi = utaxiService;
 }
+
+Response* API::acceptTripHandler::callback(Request* req){
+  Response* res = new Response();
+  res->setHeader("Content-Type", "text/html");
+
+  string username = req->getQueryParam("username");
+  int id = stoi(req->getQueryParam("id"));
+  utaxi->acceptTrip(username, id);
+
+  res->redirect("/trips-list?username="+username);
+  return res;
+}
+
+API::finishTripHandler::finishTripHandler(UTaxi* utaxiService){
+  utaxi = utaxiService;
+}
+
+Response* API::finishTripHandler::callback(Request* req){
+  Response* res = new Response();
+  res->setHeader("Content-Type", "text/html");
+
+  string username = req->getQueryParam("username");
+  int id = stoi(req->getQueryParam("id"));
+  utaxi->finishTrip(username, id);
+
+  res->redirect("/trips-list?username="+username);
+  return res;
+}
+
+API::tripsListHandler::tripsListHandler(UTaxi* taxiService){
+  utaxi = taxiService;
+}
+
+Response* API::tripsListHandler::callback(Request* req){
+  try{
+    Response* res = new Response();
+    res->setHeader("Content-Type", "text/html");
+    ifstream file;
+    file.open("static/src/trips-list-table.html");
+    string readed = "";
+    string buffer;
+    while (getline(file, buffer)) {
+      readed += buffer += "\n";
+    }
+    string replace = "[Data]";
+    string username = req->getQueryParam("username");
+    bool is_sorted = stringToBool(req->getQueryParam("is_sorted"));
+    string tableData = utaxi->getAllTrips(username, is_sorted);
+    readed.replace(readed.find(replace), replace.length(), tableData);
+    
+  }
+  catch(UTException& ex){
+    showMassage(ex.getMassage());
+  }
+}
+
 
 API::API(string mapLocation){
     utaxi = new UTaxi(mapLocation);
@@ -112,10 +159,13 @@ void API::run(){
         server.get("/images/taxi", new ShowImage("static/image/draw.png"));
         server.get("/images/ut_logo", new ShowImage("static/image/logo.png"));
         server.get("/massage", new ShowFile("static/src/massage.html", "text/html"));
+        server.get("/trips-table", new ShowFile("static/src/trips-list-table.html", "text/html"));
         server.post("/signup", new signupHandler(utaxi));
         server.post("/trip-request", new tripRequestHandler(utaxi));
         server.post("/cancel-trip", new cancelTripHandler(utaxi));
-        server.post("/trips-list", new );
+        server.get("/trips-list", new tripsListHandler(utaxi));
+        server.get("/accept-trip", new acceptTripHandler(utaxi));
+        server.get("/finish-trip", new finishTripHandler(utaxi));
         server.run();
     }
     catch (Server::Exception& e) {
