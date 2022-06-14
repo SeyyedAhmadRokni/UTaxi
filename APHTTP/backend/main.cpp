@@ -7,8 +7,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    string areasAddress = "backend/locations.csv";
-    // string areasAddress = std::string(argv[1]);
+    string areasAddress = std::string(argv[1]);
     API api(areasAddress);
     api.run();
 }

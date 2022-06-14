@@ -5,66 +5,69 @@
 #include <iostream>
 #include "UTaxi.hpp"
 
-class API{
+class API {
 private:
+    UTaxi *utaxi;
 
-  UTaxi* utaxi; 
+    class cancelTripHandler : public RequestHandler {
+    public:
+        cancelTripHandler(UTaxi *);
+        Response *callback(Request *);
 
-  class cancelTripHandler: public RequestHandler {
-  public:
-    cancelTripHandler(UTaxi*);
-    Response *callback(Request *);
-  private:
-    UTaxi* utaxi;
-  };
+    private:
+        UTaxi *utaxi;
+    };
 
-  class signupHandler : public RequestHandler {
-  public:
-    signupHandler(UTaxi* );
-    Response *callback(Request *);
-  private:
-    UTaxi* utaxi;
-  };
+    class signupHandler : public RequestHandler {
+    public:
+        signupHandler(UTaxi *);
+        Response *callback(Request *);
 
+    private:
+        UTaxi *utaxi;
+    };
 
-  class tripRequestHandler : public RequestHandler {
-  public:
-    tripRequestHandler(UTaxi*);
-    Response *callback(Request *);
-  private:
-    UTaxi* utaxi;
-  };
+    class tripRequestHandler : public RequestHandler {
+    public:
+        tripRequestHandler(UTaxi *);
+        Response *callback(Request *);
 
-  class tripsListHandler : public RequestHandler {
-  public:
-    tripsListHandler(UTaxi*);
-    Response *callback(Request *);
-  private:
-    UTaxi* utaxi;
-  };
+    private:
+        UTaxi *utaxi;
+    };
 
-  class acceptTripHandler: public RequestHandler {
-  public:
-    acceptTripHandler(UTaxi*);
-    Response *callback(Request *);
-  private:
-    UTaxi* utaxi;
-  };
+    class tripsListHandler : public RequestHandler {
+    public:
+        tripsListHandler(UTaxi *);
+        Response *callback(Request *);
 
-  class finishTripHandler: public RequestHandler {
-  public:
-    finishTripHandler(UTaxi*);
-    Response *callback(Request *);
-  private:
-    UTaxi* utaxi;
-  };
+    private:
+        UTaxi *utaxi;
+    };
 
-  static Response* showMassage(std::string massage);
+    class acceptTripHandler : public RequestHandler {
+    public:
+        acceptTripHandler(UTaxi *);
+        Response *callback(Request *);
+
+    private:
+        UTaxi *utaxi;
+    };
+
+    class finishTripHandler : public RequestHandler {
+    public:
+        finishTripHandler(UTaxi *);
+        Response *callback(Request *);
+
+    private:
+        UTaxi *utaxi;
+    };
+
+    static Response *showMassage(std::string massage);
 
 public:
     API(std::string mapLocation);
     void run();
-
 };
 
 #endif

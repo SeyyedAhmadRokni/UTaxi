@@ -8,169 +8,167 @@
 
 using namespace std;
 
-Response* API::showMassage(string massage){
-  Response *res = new Response();
-  res->setHeader("Content-Type", "text/html");
-  ifstream file;
-  file.open("static/src/massage.html");
-  string readed = "";
-  string buffer;
-  while (getline(file, buffer)) {
-    readed += buffer += "\n";
-  }
-  string replaced = "[massage]";
-  readed.replace(readed.find(replaced), replaced.length(), massage);
-  res->setBody(readed);
-  return res;
-}
-
-
-API::cancelTripHandler::cancelTripHandler(UTaxi* taxiService){
-  utaxi = taxiService;
-}
-
-Response* API::cancelTripHandler::callback(Request* req){
-  try{
-    string username = req->getBodyParam("username");
-    string strId = req->getBodyParam("trip-id");
-    if (strId == ""){
-      throw UTException(ABSENCE_MASSAGE);
-    }
-    int id = stoi(strId);
-    utaxi->cancelTrip(username, id);
-    return showMassage(SUCCESS_MASSAGE);
-  }
-  catch(UTException& ex){
-    cout << "break!" << endl;
-    return showMassage(ex.getMassage());
-  }
-}
-
-API::signupHandler::signupHandler(UTaxi* taxiService){
-  utaxi = taxiService;
-}
-
-Response* API::signupHandler::callback(Request *req) {
-  try{
-    string username = req->getBodyParam("username");
-    if (username == ""){
-      throw UTException(INCORRECT_REQUEST_MASSAGE);
-    }
-    Role role = utaxi->identifyRole(req->getBodyParam("role"));
-    utaxi->signup(username, role);
-    return showMassage(SUCCESS_MASSAGE);
-  }
-  catch(UTException& ex){
-    return showMassage(ex.getMassage());
-  }
-}
-
-API::tripRequestHandler::tripRequestHandler(UTaxi* taxiService){
-  utaxi = taxiService;
-}
-Response* API::tripRequestHandler::callback(Request *req){
-  try{
-    string username = req->getBodyParam("username");
-    string origin = req->getBodyParam("origin");
-    string destination = req->getBodyParam("destination");
-    bool inHurry = stringToBool(req->getBodyParam("in_hurry"));
-    string button = req->getBodyParam("button");
-    if (button == "calculate-cost"){
-      double cost = utaxi->getTripCost(username, origin, destination, inHurry);
-      return showMassage("Trip cost : " + to_string(cost));
-    }
-    else if (button == "request"){
-      int tripId = utaxi->startTrip(username, origin, destination, inHurry);
-      return showMassage("Trip id : " + to_string(tripId));
-    }
-  }
-  catch(UTException& ex){
-    return showMassage(ex.getMassage());
-  }
-  
-}
-
-API::acceptTripHandler::acceptTripHandler(UTaxi* utaxiService){
-  utaxi = utaxiService;
-}
-
-Response* API::acceptTripHandler::callback(Request* req){
-  try{
-    string username = req->getQueryParam("username");
-    int id = stoi(req->getQueryParam("id"));
-    utaxi->acceptTrip(username, id);
-
-    return Response::redirect("/trips-table?username="+username+
-      "&sort_by_cost="+req->getQueryParam("sort_by_cost"));
-  }
-  catch(UTException& ex){
-    return showMassage(ex.getMassage());
-  }
-}
-
-API::finishTripHandler::finishTripHandler(UTaxi* utaxiService){
-  utaxi = utaxiService;
-}
-
-Response* API::finishTripHandler::callback(Request* req){
-  try{
-    string username = req->getQueryParam("username");
-    int id = stoi(req->getQueryParam("id"));
-    utaxi->finishTrip(username, id);
-
-    return Response::redirect("/trips-table?username="+username+
-      "&sort_by_cost="+req->getQueryParam("sort_by_cost"));
-  }
-  catch(UTException& ex){
-    return showMassage(ex.getMassage());
-  }
-}
-
-API::tripsListHandler::tripsListHandler(UTaxi* taxiService){
-  utaxi = taxiService;
-}
-
-Response* API::tripsListHandler::callback(Request* req){
-  try{
-    string username = req->getQueryParam("username");
-    string isSorted = req->getQueryParam("sort_by_cost");
-    bool sortedByCost = stringToBool(isSorted);
-    string tableData = utaxi->getAllTrips(username, sortedByCost);
-
-    Response* res = new Response();
+Response *API::showMassage(string massage) {
+    Response *res = new Response();
     res->setHeader("Content-Type", "text/html");
-
     ifstream file;
-    file.open("static/src/trips-list-table.html");
-    string replace = "[Data]";
-    string listPage = "";
+    file.open("static/src/massage.html");
+    string readed = "";
     string buffer;
     while (getline(file, buffer)) {
-      listPage += buffer += "\n";
+        readed += buffer += "\n";
     }
-    listPage.replace(listPage.find(replace), replace.length(), tableData);
-
-    int index;
-    string sortData = "[sorted]";
-    while((index = listPage.find(sortData)) != string::npos) {
-      listPage.replace(index, sortData.length(), isSorted);
-    }
-
-    res->setBody(listPage);
+    string replaced = "[massage]";
+    readed.replace(readed.find(replaced), replaced.length(), massage);
+    res->setBody(readed);
     return res;
-  }
-  catch(UTException& ex){
-    cout << "Data : "<< endl;
-    return showMassage(ex.getMassage());
-  }
 }
 
+API::cancelTripHandler::cancelTripHandler(UTaxi *taxiService) {
+    utaxi = taxiService;
+}
 
-API::API(string mapLocation){
+Response *API::cancelTripHandler::callback(Request *req) {
+    try {
+        string username = req->getBodyParam("username");
+        string strId = req->getBodyParam("trip-id");
+        if (strId == "") {
+            throw UTException(ABSENCE_MASSAGE);
+        }
+        int id = stoi(strId);
+        utaxi->cancelTrip(username, id);
+        return showMassage(SUCCESS_MASSAGE);
+    }
+    catch (UTException &ex) {
+        cout << "break!" << endl;
+        return showMassage(ex.getMassage());
+    }
+}
+
+API::signupHandler::signupHandler(UTaxi *taxiService) {
+    utaxi = taxiService;
+}
+
+Response *API::signupHandler::callback(Request *req) {
+    try {
+        string username = req->getBodyParam("username");
+        if (username == "") {
+            throw UTException(INCORRECT_REQUEST_MASSAGE);
+        }
+        Role role = utaxi->identifyRole(req->getBodyParam("role"));
+        utaxi->signup(username, role);
+        return showMassage(SUCCESS_MASSAGE);
+    }
+    catch (UTException &ex) {
+        return showMassage(ex.getMassage());
+    }
+}
+
+API::tripRequestHandler::tripRequestHandler(UTaxi *taxiService) {
+    utaxi = taxiService;
+}
+Response *API::tripRequestHandler::callback(Request *req) {
+    try {
+        string username = req->getBodyParam("username");
+        string origin = req->getBodyParam("origin");
+        string destination = req->getBodyParam("destination");
+        bool inHurry = stringToBool(req->getBodyParam("in_hurry"));
+        string button = req->getBodyParam("button");
+        if (button == "calculate-cost") {
+            double cost = utaxi->getTripCost(username, origin, destination, inHurry);
+            return showMassage("Trip cost : " + to_string(cost));
+        }
+        else if (button == "request") {
+            int tripId = utaxi->startTrip(username, origin, destination, inHurry);
+            return showMassage("Trip id : " + to_string(tripId));
+        }
+    }
+    catch (UTException &ex) {
+        return showMassage(ex.getMassage());
+    }
+}
+
+API::acceptTripHandler::acceptTripHandler(UTaxi *utaxiService) {
+    utaxi = utaxiService;
+}
+
+Response *API::acceptTripHandler::callback(Request *req) {
+    try {
+        string username = req->getQueryParam("username");
+        int id = stoi(req->getQueryParam("id"));
+        utaxi->acceptTrip(username, id);
+
+        return Response::redirect("/trips-table?username=" + username +
+                                  "&sort_by_cost=" + req->getQueryParam("sort_by_cost"));
+    }
+    catch (UTException &ex) {
+        return showMassage(ex.getMassage());
+    }
+}
+
+API::finishTripHandler::finishTripHandler(UTaxi *utaxiService) {
+    utaxi = utaxiService;
+}
+
+Response *API::finishTripHandler::callback(Request *req) {
+    try {
+        string username = req->getQueryParam("username");
+        int id = stoi(req->getQueryParam("id"));
+        utaxi->finishTrip(username, id);
+
+        return Response::redirect("/trips-table?username=" + username +
+                                  "&sort_by_cost=" + req->getQueryParam("sort_by_cost"));
+    }
+    catch (UTException &ex) {
+        return showMassage(ex.getMassage());
+    }
+}
+
+API::tripsListHandler::tripsListHandler(UTaxi *taxiService) {
+    utaxi = taxiService;
+}
+
+Response *API::tripsListHandler::callback(Request *req)
+{
+    try {
+        string username = req->getQueryParam("username");
+        string isSorted = req->getQueryParam("sort_by_cost");
+        bool sortedByCost = stringToBool(isSorted);
+        string tableData = utaxi->getAllTrips(username, sortedByCost);
+
+        Response *res = new Response();
+        res->setHeader("Content-Type", "text/html");
+
+        ifstream file;
+        file.open("static/src/trips-list-table.html");
+        string replace = "[Data]";
+        string listPage = "";
+        string buffer;
+        while (getline(file, buffer)) {
+            listPage += buffer += "\n";
+        }
+        listPage.replace(listPage.find(replace), replace.length(), tableData);
+
+        int index;
+        string sortData = "[sorted]";
+        while ((index = listPage.find(sortData)) != string::npos) {
+            listPage.replace(index, sortData.length(), isSorted);
+        }
+
+        res->setBody(listPage);
+        return res;
+    }
+    catch (UTException &ex) {
+        cout << "Data : " << endl;
+        return showMassage(ex.getMassage());
+    }
+}
+
+API::API(string mapLocation) {
     utaxi = new UTaxi(mapLocation);
 }
 
-void API::run(){
+void API::run() {
     try {
         Server server;
         server.get("/", new ShowPage("static/src/home.html"));
@@ -190,11 +188,11 @@ void API::run(){
         server.get("/finish-trip", new finishTripHandler(utaxi));
         server.run();
     }
-    catch (Server::Exception& e) {
+    catch (Server::Exception &e) {
         std::cerr << e.getMessage() << std::endl;
     }
-    catch(UTException& ex){
-      ex.getMassage();
+    catch (UTException &ex) {
+        ex.getMassage();
     }
 }
 
