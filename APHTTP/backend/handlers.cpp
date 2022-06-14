@@ -32,7 +32,11 @@ API::cancelTripHandler::cancelTripHandler(UTaxi* taxiService){
 Response* API::cancelTripHandler::callback(Request* req){
   try{
     string username = req->getBodyParam("username");
-    int id = stoi(req->getBodyParam("trip-id"));
+    string strId = req->getBodyParam("trip-id");
+    if (strId == ""){
+      throw UTException(ABSENCE_MASSAGE);
+    }
+    int id = stoi(strId);
     utaxi->cancelTrip(username, id);
     return showMassage(SUCCESS_MASSAGE);
   }
@@ -49,6 +53,9 @@ API::signupHandler::signupHandler(UTaxi* taxiService){
 Response* API::signupHandler::callback(Request *req) {
   try{
     string username = req->getBodyParam("username");
+    if (username == ""){
+      throw UTException(INCORRECT_REQUEST_MASSAGE);
+    }
     Role role = utaxi->identifyRole(req->getBodyParam("role"));
     utaxi->signup(username, role);
     return showMassage(SUCCESS_MASSAGE);
@@ -88,12 +95,17 @@ API::acceptTripHandler::acceptTripHandler(UTaxi* utaxiService){
 }
 
 Response* API::acceptTripHandler::callback(Request* req){
-  string username = req->getQueryParam("username");
-  int id = stoi(req->getQueryParam("id"));
-  utaxi->acceptTrip(username, id);
+  try{
+    string username = req->getQueryParam("username");
+    int id = stoi(req->getQueryParam("id"));
+    utaxi->acceptTrip(username, id);
 
-  return Response::redirect("/trips-table?username="+username+
-    "&sort_by_cost="+req->getQueryParam("sort_by_cost"));
+    return Response::redirect("/trips-table?username="+username+
+      "&sort_by_cost="+req->getQueryParam("sort_by_cost"));
+  }
+  catch(UTException& ex){
+    return showMassage(ex.getMassage());
+  }
 }
 
 API::finishTripHandler::finishTripHandler(UTaxi* utaxiService){
@@ -101,18 +113,17 @@ API::finishTripHandler::finishTripHandler(UTaxi* utaxiService){
 }
 
 Response* API::finishTripHandler::callback(Request* req){
-  Response* res = new Response();
-  res->setHeader("Content-Type", "text/html");
+  try{
+    string username = req->getQueryParam("username");
+    int id = stoi(req->getQueryParam("id"));
+    utaxi->finishTrip(username, id);
 
-  string username = req->getQueryParam("username");
-  string isSorted = req->getQueryParam("sort_by_cost");
-  int id = stoi(req->getQueryParam("id"));
-  utaxi->finishTrip(username, id);
-  cout << "mew  !" << endl;
-
-  res->redirect("/trips-table?username="+username
-    +"&sort_by_cost"+isSorted);
-  return res;
+    return Response::redirect("/trips-table?username="+username+
+      "&sort_by_cost="+req->getQueryParam("sort_by_cost"));
+  }
+  catch(UTException& ex){
+    return showMassage(ex.getMassage());
+  }
 }
 
 API::tripsListHandler::tripsListHandler(UTaxi* taxiService){
@@ -150,7 +161,7 @@ Response* API::tripsListHandler::callback(Request* req){
   }
   catch(UTException& ex){
     cout << "Data : "<< endl;
-    showMassage(ex.getMassage());
+    return showMassage(ex.getMassage());
   }
 }
 
