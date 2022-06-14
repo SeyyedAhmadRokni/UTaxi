@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css-style">
+    <title>Trip Request</title>
+</head>
+<body>
+    <nav id="navbar" class="bg-prim row-flex">
+        <ul class="list row-flex flex-item">
+            <li>
+                <a href="/" class="btn">Home</a>
+            </li>
+            
+            <li>
+                <a href="/signup" class="btn">Sign up</a>
+            </li>
+            <li>
+                <a href="/trip-request" class="btn">Trip request</a>
+            </li>
+            <li>
+                <a href="/trips-list" class="btn current">Trips list</a>
+            </li>
+            <li>
+                <a href="/cancel-trip" class="btn">Cancel trip</a>
+            </li>
+        </ul>
+        <img src="/images/ut_logo" alt="UTaxi" >
+    </nav>
+
+    <section class="py-1">
+        <div class="row-flex" id="center-form">
+            <form action="/trips-table" class="contain" id="form" method="get">
+                <h2>See trips list</h2>
+                <div>
+                    <label for="username" class="block bold">Username : </label>
+                    <input type="text" name="username" id="username">
+                </div>
+                <div>
+                    <label for="is_sorted" class="bold"> Sort by cost : </label>
+                    <input type="hidden" name="sort_by_cost" value="off">
+                    <input type="checkbox" name="sort_by_cost" id="is_sorted">
+                </div>
+                <button type="submit" class="btn submit">OK</button>
+            </form>
+        </div>
+
+    </section>
+
+    <footer class="row-flex bg-prim" id="footer">
+        <p class="text-center"> &copy; Produced By : Seyyed Ahmad Rokni Hosseini</p>
+
+    </footer>
+</body>
+</html>

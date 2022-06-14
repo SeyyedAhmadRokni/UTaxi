@@ -12,7 +12,7 @@ Response *API::showMassage(string massage) {
     Response *res = new Response();
     res->setHeader("Content-Type", "text/html");
     ifstream file;
-    file.open("static/src/massage.html");
+    file.open("pages/src/massage.html");
     string readed = "";
     string buffer;
     while (getline(file, buffer)) {
@@ -140,7 +140,7 @@ Response *API::tripsListHandler::callback(Request *req)
         res->setHeader("Content-Type", "text/html");
 
         ifstream file;
-        file.open("static/src/trips-list-table.html");
+        file.open("pages/src/trips-list-table.html");
         string replace = "[Data]";
         string listPage = "";
         string buffer;
@@ -171,15 +171,15 @@ API::API(string mapLocation) {
 void API::run() {
     try {
         Server server;
-        server.get("/", new ShowPage("static/src/home.html"));
-        server.get("/signup", new ShowPage("static/src/signup-page.html"));
-        server.get("/trip-request", new ShowPage("static/src/trip-request.html"));
-        server.get("/trips-list", new ShowPage("static/src/trip-list-request.html"));
-        server.get("/cancel-trip", new ShowPage("static/src/cancel-trip.html"));
-        server.get("/css-style", new ShowFile("static/src/style.css", "text/css"));
-        server.get("/images/taxi", new ShowImage("static/image/draw.png"));
-        server.get("/images/ut_logo", new ShowImage("static/image/logo.png"));
-        server.get("/massage", new ShowFile("static/src/massage.html", "text/html"));
+        server.get("/", new ShowPage("pages/src/home.html"));
+        server.get("/signup", new ShowPage("pages/src/signup-page.html"));
+        server.get("/trip-request", new ShowPage("pages/src/trip-request.html"));
+        server.get("/trips-list", new ShowPage("pages/src/trip-list-request.html"));
+        server.get("/cancel-trip", new ShowPage("pages/src/cancel-trip.html"));
+        server.get("/css-style", new ShowFile("pages/src/style.css", "text/css"));
+        server.get("/images/taxi", new ShowImage("pages/image/draw.png"));
+        server.get("/images/ut_logo", new ShowImage("pages/image/logo.png"));
+        server.get("/massage", new ShowFile("pages/src/massage.html", "text/html"));
         server.post("/signup", new signupHandler(utaxi));
         server.post("/trip-request", new tripRequestHandler(utaxi));
         server.post("/cancel-trip", new cancelTripHandler(utaxi));

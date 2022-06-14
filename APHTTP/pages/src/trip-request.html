@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css-style">
+    <title>Trip Request</title>
+</head>
+<body>
+    <nav id="navbar" class="bg-prim row-flex">
+        <ul class="list row-flex flex-item">
+            <li>
+                <a href="/" class="btn">Home</a>
+            </li>
+            
+            <li>
+                <a href="/signup" class="btn">Sign up</a>
+            </li>
+            <li>
+                <a href="/trip-request" class="btn current">Trip request</a>
+            </li>
+            <li>
+                <a href="/trips-list" class="btn">Trips list</a>
+            </li>
+            <li>
+                <a href="/cancel-trip" class="btn">Cancel trip</a>
+            </li>
+        </ul>
+        <img src="/images/ut_logo" alt="UTaxi" >
+    </nav>
+
+    <section class="py-1">
+        <div class="row-flex" id="center-form">
+            <form action="/trip-request" class="contain" id="form" method="post">
+
+                <h2>Trip request</h2>
+
+                <div>
+                    <label for="username" class="block bold">Username : </label>
+                    <input type="text" name="username" id="username">
+                </div>
+
+                <div>
+                    <label for="origin" class="bold">Origin : </label>
+                    <input type="text" name="origin" id="origin">
+                </div>
+                <div>
+                    <label for="destination" class="bold">Destination : </label>
+                    <input type="text" name="destination" id="destination">
+                </div>
+                <div>
+                    <label for="in_hurry" class="bold">In hurry : </label>
+                    <input type="checkbox" name="in_hurry" id="in_hurry">
+                </div>
+                
+
+                <button type="submit" name="button" class="btn submit" id="submit" value="request">Request</button>
+                <button type="submit" name="button" class="btn submit" value="calculate-cost">Calculate cost</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="row-flex bg-prim" id="footer">
+        <p class="text-center"> &copy; Produced By : Seyyed Ahmad Rokni Hosseini</p>
+
+
+    </footer>
+</body>
+</html>

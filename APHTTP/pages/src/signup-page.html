@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTaxi</title>
+    <link rel="stylesheet" href="/css-style">
+    <link rel="icon" href="../image/taxi-logo.png">
+</head>
+<body>
+    <nav id="navbar" class="bg-prim row-flex">
+        <ul class="list row-flex flex-item">
+            <li>
+                <a href="/" class="btn">Home</a>
+            </li>
+            
+            <li>
+                <a href="/signup" class="btn current">Sign up</a>
+            </li>
+            <li>
+                <a href="/trip-request" class="btn">Trip request</a>
+            </li>
+            <li>
+                <a href="/trips-list" class="btn">Trips list</a>
+            </li>
+            <li>
+                <a href="/cancel-trip" class="btn">Cancel trip</a>
+            </li>
+        </ul>
+        <img src="/images/ut_logo" alt="UTaxi" >
+    </nav>
+
+    <section class="py-1">
+        <div class="row-flex" id="center-form">
+            <form action="/signup" class="contain" id="form" method="post">
+
+                <h2>Sign up</h2>
+
+                <div>
+                    <label for="username" class="block bold">Username : </label>
+                    <input type="text" name="username" id="username">
+                </div>
+                
+                <div>
+                    <label for="role" class="block bold">Role : </label>
+                    <div class="flex-item">
+                        <label for="driver">Driver</label>
+                        <input type="radio" name="role" id="driver" value="driver">
+                    </div>
+    
+                    <div>
+                        <label for="passenger">Passenger</label>
+                        <input type="radio" name="role" id="passenger" value="passenger">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn submit" >Sign up</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="row-flex bg-prim" id="footer">
+        <p class="text-center"> &copy; Produced By : Seyyed Ahmad Rokni Hosseini</p>
+
+
+    </footer>
+</body>
+</html>
