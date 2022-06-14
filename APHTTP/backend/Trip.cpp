@@ -67,30 +67,32 @@ std::ostream& operator<<(std::ostream& os, const Trip& trip){
 
 std::string Trip::getTableRowData(std::string username){
     std::ostringstream os;
-    os << "<row>" << std::endl;
+    os << "<tr>" << std::endl;
     os << "<td>" << id << "</td>" << std::endl;
-    os << "<td>" << passenger << "</td>" << std::endl;
+    os << "<td>" << *passenger << "</td>" << std::endl;
     os << "<td>" << *origin << "</td>" << std::endl;
     os << "<td>" << *destination << "</td>" << std::endl;
     os << "<td>" << price << "</td>" << std::endl;
     if (status == WAITING){
         os << "<td>" << " waiting "<< "</td>" << std::endl;
         os <<  "<td><a href='/accept-trip?id=" << id 
-        << "&username=" << username << "'> Accept </td>" 
+        << "&username=" << username 
+        << "&sort_by_cost=[sorted]"<< "'> Accept </td>" 
         << std::endl;
     }
     else if(status == TRAVELING){
         os << "<td>" << " traveling "<< "</td>" << std::endl;
         if (driver->isYou(username)){
             os <<  "<td><a href='/finish-trip?id=" << id 
-            << "&username=" << username << "'> Accept </td>" 
+            << "&username=" << username
+            << "&sort_by_cost=[sorted]"<< "'> Finish </td>" 
             << std::endl;
         }
     }
     else{
         os << "<td>" << " finished "<< "</td>" << std::endl;
     }
-    os << "</row>" << std::endl;
+    os << "</tr>" << std::endl;
     return os.str();
 }
 
